@@ -1,0 +1,16 @@
+INDEX VERSION 1.126+C:\Users\SIR\Desktop\UNIVERSIDAD DE BARCELONA\Curso 15-16\Base de dades avanzada\Practica\Practica1\CuinaUB\.metadata\.plugins\org.eclipse.jdt.core
+898602751.index
+550495443.index
+129886768.index
+2580896322.index
+3911329804.index
+919887477.index
+334204739.index
+1878940636.index
+1626787573.index
+2242401919.index
+3992158717.index
+3502358661.index
+3585815903.index
+276264896.index
+644208093.index

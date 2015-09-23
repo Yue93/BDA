@@ -1,0 +1,18 @@
+package Vista;
+
+import java.util.Scanner;
+
+public class Visor {
+	
+	private Scanner sc;
+	
+	enum Menu_Usuario{"Crear receta","Consultar receta","","Eleminar receta"};
+	
+	public static void main(String[] args){
+		sc=new Scanner(System.in);
+	}
+	
+	private void printMenu(){
+		
+	}
+}
