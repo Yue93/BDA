@@ -1,6 +1,9 @@
 package Vista;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import Modelo.Usuario;
 
 public class Visor {
 	
@@ -19,6 +22,7 @@ public class Visor {
 	
 	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingredientes","Salir"};
 	
+	private ArrayList<Usuario> usuarios=new ArrayList();
 	
 	public static void main(String[] args){
 		nerrors=0;
