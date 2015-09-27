@@ -1,12 +1,12 @@
 package Modelo;
 
-public class Comida {
+public class FamiliaIng {
 	private int id;
 	private String nombre;
 	private String descripcion;
 	
 	
-	public Comida(int id, String nombre, String descripcion){
+	public FamiliaIng(int id, String nombre, String descripcion){
 		this.id=id;
 		this.nombre=nombre;
 		this.descripcion=descripcion;
