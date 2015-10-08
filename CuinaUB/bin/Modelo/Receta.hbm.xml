@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 08-oct-2015 21:37:23 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Modelo.Receta" table="RECETA">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="java.lang.String">
+            <column name="NOMBRE" />
+        </property>
+        <property name="elaboracion" type="java.lang.String" access="field">
+            <column name="ELABORACION" />
+        </property>
+        <property name="dificultad" type="int" access="field">
+            <column name="DIFICULTAD" />
+        </property>
+        <property name="tiempo" type="int" access="field">
+            <column name="TIEMPO" />
+        </property>
+    </class>
+</hibernate-mapping>

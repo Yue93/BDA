@@ -1,8 +1,19 @@
 package Vista;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.type.StringType;
+
+import com.ub.edu.bda.Articulo;
+import com.ub.edu.bda.Catalogo;
+
+import Controlador.ConnectorHB;
 import Modelo.Usuario;
 
 public class Visor {
@@ -30,10 +41,52 @@ public class Visor {
 		System.out.println("Entra el nombre de usuario y la contrasenya:");
 		usuario=sc.next();
 		contrasenya=sc.next();
-		gestionMenuUsuario();
+		test();
+		//gestionMenuUsuario();
 		
 	}
 	
+	
+	public void test(){
+		Session session = null;
+        Transaction tx = null;
+        Articulo art = new Articulo("Lavadora AEG", 23.4);
+        
+        try {
+            session = ConnectorHB.getSession();
+            tx = session.beginTransaction();
+            session.save(art);
+            //El objecto art esta enlazado
+            
+            art.setDescripcion("Seat Leon"); //Esto se modificara en la BD no los datos iniciales.
+            tx.commit();
+            
+            List<Catalogo> listado = new ArrayList<Catalogo>();
+            Query q = session.createQuery("from Catalogo");
+            listado = q.list();
+            
+            for (Catalogo catalogo : listado) {
+            	System.out.println(catalogo.getDescripcion());
+            	for(Articulo articulo: catalogo.getArticulos())
+                System.out.println(articulo.getDescripcion());
+            }
+            System.out.println("Proceso finalizado...");
+            //US DE QUERY SQL PER TROBAR OBJECTES
+           List <Articulo> articulos = session.createSQLQuery("SELECT * FROM ARTICULO").addEntity(Articulo.class).list();
+            for(Articulo articulo: articulos)
+                System.out.println(articulo.getDescripcion());
+            
+  
+            Query q1= session.createSQLQuery("SELECT descripcion from ARTICULO WHERE ID=1").addScalar("descripcion",StringType.INSTANCE);
+          System.out.println("HE OBTINGUT LA DESCRIPCIO: "+q1.list().get(0));
+            
+        } catch (HibernateException e) {
+            if(tx!=null && tx.isActive()) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            if(session!=null) session.close();
+        }
+	}
 	
 	
 	/**
