@@ -1,10 +1,13 @@
 package Modelo;
 
+import java.util.Set;
+
 public class FamiliaIng {
 	private int id;
 	private String nombre;
 	private String descripcion;
 	
+	private Set<Ingrediente> ingredientes;
 	
 	public FamiliaIng(int id, String nombre, String descripcion){
 		this.id=id;

@@ -1,10 +1,13 @@
 package Modelo;
 
+import java.util.Set;
+
 public class Plato {
 	private int id;
 	private String nombre;
 	private String descripcion;
 	
+	private Set<Receta> recetas;
 	
 	public Plato(int id, String nombre, String descripcion){
 		this.id=id;

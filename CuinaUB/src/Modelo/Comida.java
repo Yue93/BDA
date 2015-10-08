@@ -1,9 +1,13 @@
 package Modelo;
 
+import java.util.Set;
+
 public class Comida {
 	private int id;
 	private String nombre;
 	private String descripcion;
+	
+	private Set<Receta> recetas;
 	
 	
 	public Comida(int id, String nombre, String descripcion){

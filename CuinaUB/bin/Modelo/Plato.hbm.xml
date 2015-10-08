@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 08-oct-2015 21:37:23 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 09-oct-2015 0:34:34 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Plato" table="PLATO">
         <id name="id" type="int">
@@ -14,5 +14,11 @@
         <property name="descripcion" type="java.lang.String">
             <column name="DESCRIPCION" />
         </property>
+        <set name="recetas" table="RECETA" inverse="false" lazy="true" access="field">
+            <key>
+                <column name="ID" />
+            </key>
+            <one-to-many class="Modelo.Receta" />
+        </set>
     </class>
 </hibernate-mapping>

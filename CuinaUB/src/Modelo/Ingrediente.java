@@ -1,10 +1,13 @@
 package Modelo;
 
+import java.util.Set;
+
 public class Ingrediente {
 	private String nombre;
 	private FamiliaIng familia;
 	private boolean refrigeracion;
 	
+	private Set<Receta> recetas;
 	
 	public Ingrediente(String nombre,FamiliaIng familia,boolean refrigeracion){
 		this.nombre=nombre;

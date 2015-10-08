@@ -1,6 +1,7 @@
 package Modelo;
 
 import java.sql.Time;
+import java.util.Set;
 
 public class Receta {
 	private int id;
@@ -8,6 +9,11 @@ public class Receta {
 	private String elaboracion;
 	private int dificultad;
 	private int tiempo;
+	
+	private Comida comida;
+	private Plato plato;
+	private Chef chef;
+	private Set<Ingrediente> ingredientes;
 	
 	public Receta(int id,String nombre, String elaboracion,int dificultad, int tiempo){
 		this.id=id;
