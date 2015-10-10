@@ -10,16 +10,16 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.type.StringType;
 
-import com.ub.edu.bda.Articulo;
-import com.ub.edu.bda.Catalogo;
-
 import Controlador.ConnectorHB;
-import Modelo.Usuario;
+//import Modelo.Usuario;
 
 public class Visor {
 	
 	private static int nerrors;
 	private static Scanner sc;
+	
+	private static String username="test";
+	private static String password="test";
 	
 	static private String usuario="";
 	
@@ -33,7 +33,6 @@ public class Visor {
 	
 	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingredientes","Salir"};
 	
-	private ArrayList<Usuario> usuarios=new ArrayList();
 	
 	public static void main(String[] args){
 		nerrors=0;
@@ -41,16 +40,35 @@ public class Visor {
 		System.out.println("Entra el nombre de usuario y la contrasenya:");
 		usuario=sc.next();
 		contrasenya=sc.next();
-		test();
+		if(checkUser(usuario,contrasenya)){
+			System.out.println("===========================================");
+			System.out.println("                 Welcome                   ");
+			System.out.println("===========================================");
+			test();
+		}
+		
 		//gestionMenuUsuario();
 		
 	}
 	
 	
-	public void test(){
+	public static void test(){
+		Session session = null;
+		Transaction tx=null;
+		try{
+			session=ConnectorHB.getSession();
+		}catch(HibernateException except){
+			except.printStackTrace();
+		}finally{
+			if(session!=null) session.close();
+		}
+	}
+	
+	
+	/**public void test(){
 		Session session = null;
         Transaction tx = null;
-        Articulo art = new Articulo("Lavadora AEG", 23.4);
+        Articulo art = new Articulo("Lavadora", "AEG", 4);
         
         try {
             session = ConnectorHB.getSession();
@@ -86,8 +104,16 @@ public class Visor {
         } finally {
             if(session!=null) session.close();
         }
-	}
+	}**/
 	
+	
+	private static boolean checkUser(String enterUsername,String enterPassaword){
+		boolean correct=false;
+		if(username.equals(enterUsername) && password.equals(enterPassaword)){
+			correct=true;
+		}
+		return correct;
+	}
 	
 	/**
      * Método donde gestionamo nuestra primer menú textual.Donde usuario decide si empezar una

@@ -47,7 +47,6 @@ public class TestHB {
 	            for(Articulo articulo: articulos)
 	                System.out.println(articulo.getDescripcion());
 	            
-	  
 	            Query q1= session.createSQLQuery("SELECT descripcion from ARTICULO WHERE ID=1").addScalar("descripcion",StringType.INSTANCE);
 	          System.out.println("HE OBTINGUT LA DESCRIPCIO: "+q1.list().get(0));
 	            

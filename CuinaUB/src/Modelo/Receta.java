@@ -22,44 +22,78 @@ public class Receta {
 		this.dificultad=dificultad;
 		this.tiempo=tiempo;
 	}
-	
-	public int getId(){
-		return this.id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getElaboracion() {
+		return elaboracion;
+	}
+
+	public void setElaboracion(String elaboracion) {
+		this.elaboracion = elaboracion;
+	}
+
+	public int getDificultad() {
+		return dificultad;
+	}
+
+	public void setDificultad(int dificultad) {
+		this.dificultad = dificultad;
+	}
+
+	public int getTiempo() {
+		return tiempo;
+	}
+
+	public void setTiempo(int tiempo) {
+		this.tiempo = tiempo;
+	}
+
+	public Comida getComida() {
+		return comida;
+	}
+
+	public void setComida(Comida comida) {
+		this.comida = comida;
+	}
+
+	public Plato getPlato() {
+		return plato;
+	}
+
+	public void setPlato(Plato plato) {
+		this.plato = plato;
+	}
+
+	public Chef getChef() {
+		return chef;
+	}
+
+	public void setChef(Chef chef) {
+		this.chef = chef;
+	}
+
+	public Set<Ingrediente> getIngredientes() {
+		return ingredientes;
+	}
+
+	public void setIngredientes(Set<Ingrediente> ingredientes) {
+		this.ingredientes = ingredientes;
 	}
 	
-	public void setId(int id){
-		this.id=id;
-	}
 	
-	public String getNombre(){
-		return this.nombre;
-	}
-	
-	public void setNombre(String nombre){
-		this.nombre=nombre;
-	}
-	
-	public String getElaboracion(){
-		return this.elaboracion;
-	}
-	
-	public void setElaboraicion(String elaboracion){
-		this.elaboracion=elaboracion;
-	}
-	
-	public int getDifucultad(){
-		return this.dificultad;
-	}
-	
-	public void setDificultad(int dificultad){
-		this.dificultad=dificultad;
-	}
-	
-	public int getTElaboracion(){
-		return this.tiempo;
-	}
-	
-	public void setTElaboracion(int tiempo){
-		this.tiempo=tiempo;
-	}
 }

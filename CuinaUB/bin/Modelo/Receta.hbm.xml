@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 09-oct-2015 0:34:34 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Receta" table="RECETA">
         <id name="id" type="int">
@@ -11,29 +11,27 @@
         <property name="nombre" type="java.lang.String">
             <column name="NOMBRE" />
         </property>
-        <property name="elaboracion" type="java.lang.String" access="field">
+        <property name="elaboracion" type="java.lang.String">
             <column name="ELABORACION" />
         </property>
-        <property name="dificultad" type="int" access="field">
+        <property name="dificultad" type="int">
             <column name="DIFICULTAD" />
         </property>
-        <property name="tiempo" type="int" access="field">
+        <property name="tiempo" type="int">
             <column name="TIEMPO" />
         </property>
-        <many-to-one name="comida" class="Modelo.Comida" access="field" fetch="join">
+        <many-to-one name="comida" class="Modelo.Comida" fetch="join">
             <column name="COMIDA" />
         </many-to-one>
-        <many-to-one name="plato" class="Modelo.Plato" access="field" fetch="join">
+        <many-to-one name="plato" class="Modelo.Plato" fetch="join">
             <column name="PLATO" />
         </many-to-one>
-        <many-to-one name="chef" class="Modelo.Chef" access="field" fetch="join">
+        <many-to-one name="chef" class="Modelo.Chef" fetch="join">
             <column name="CHEF" />
         </many-to-one>
-        <set name="ingredientes" table="INGREDIENTE" inverse="false" lazy="true" access="field">
-            <key>
-                <column name="ID" />
-            </key>
-            <one-to-many class="Modelo.Ingrediente" />
+        <set name="ingredientes" table="RECETA_INGREDIENTE" cascade="all">
+            <key column="IDRECETA" />
+            <many-to-many column="IDINGREIDENTE" class="Modelo.Ingrediente" />
         </set>
     </class>
 </hibernate-mapping>

@@ -14,28 +14,38 @@ public class Ingrediente {
 		this.familia=familia;
 		this.refrigeracion=refrigeracion;
 	}
-	
-	public String getNombre(){
-		return this.nombre;
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public FamiliaIng getFamilia() {
+		return familia;
+	}
+
+	public void setFamilia(FamiliaIng familia) {
+		this.familia = familia;
+	}
+
+	public boolean isRefrigeracion() {
+		return refrigeracion;
+	}
+
+	public void setRefrigeracion(boolean refrigeracion) {
+		this.refrigeracion = refrigeracion;
+	}
+
+	public Set<Receta> getRecetas() {
+		return recetas;
+	}
+
+	public void setRecetas(Set<Receta> recetas) {
+		this.recetas = recetas;
 	}
 	
-	public void setNombre(String nombre){
-		this.nombre=nombre;
-	}
 	
-	public FamiliaIng getFamilia(){
-		return this.familia;
-	}
-	
-	public void setFamilia(FamiliaIng familia){
-		this.familia=familia;
-	}
-	
-	public boolean getRefrigeracion(){
-		return this.refrigeracion;
-	}
-	
-	public void setRefrigeracion(boolean refrigeracion){
-		this.refrigeracion=refrigeracion;
-	}
 }

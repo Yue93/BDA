@@ -10,13 +10,11 @@
         
         
         
-        <mapping resource="Chef.hbm.xml"/>
-        <mapping resource="Comida.hbm.xml"/>
-        <mapping resource="FamiliaIng.hbm.xml"/>
-        <mapping resource="Ingrediente.hbm.xml"/>
-        <mapping resource="Persona.hbm.xml"/>
-        <mapping resource="Plato.hbm.xml"/>
-        <mapping resource="Receta.hbm.xml"/>
-        <mapping resource="Usuario.hbm.xml"/>
+        <mapping resource="Modelo/Chef.hbm.xml"/>
+        <mapping resource="Modelo/Comida.hbm.xml"/>
+        <mapping resource="Modelo/FamiliaIng.hbm.xml"/>
+        <mapping resource="Modelo/Ingrediente.hbm.xml"/>
+        <mapping resource="Modelo/Plato.hbm.xml"/>
+        <mapping resource="Modelo/Receta.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

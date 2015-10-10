@@ -31,12 +31,24 @@ public class Chef {
 	public void setApellido(String apellido){
 		this.apellido=apellido;
 	}
-	
-	public void setEstrellas(int nEstrellas){
-		this.nEstrellas=nEstrellas;
+
+
+	public int getnEstrellas() {
+		return nEstrellas;
 	}
-	
-	public int getEstrellas(){
-		return this.nEstrellas;
+
+
+	public void setnEstrellas(int nEstrellas) {
+		this.nEstrellas = nEstrellas;
+	}
+
+
+	public Set<Receta> getRecetas() {
+		return recetas;
+	}
+
+
+	public void setRecetas(Set<Receta> recetas) {
+		this.recetas = recetas;
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 09-oct-2015 0:34:34 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Ingrediente" table="INGREDIENTE">
         <id name="nombre" type="java.lang.String">
@@ -14,11 +14,9 @@
         <property name="refrigeracion" type="boolean">
             <column name="REFRIGERACION" />
         </property>
-        <set name="recetas" table="RECETA" inverse="false" lazy="true" access="field">
-            <key>
-                <column name="NOMBRE" />
-            </key>
-            <one-to-many class="Modelo.Receta" />
+        <set name="recetas" table="RECETA_INGREDIENTE" cascade="all">
+            <key column="IDINGREDIENTE" />
+            <many-to-many column="IDRECETA" class="Modelo.Receta" />
         </set>
     </class>
 </hibernate-mapping>

@@ -15,28 +15,46 @@ public class Comida {
 		this.nombre=nombre;
 		this.descripcion=descripcion;
 	}
-	
-	public int getId(){
-		return this.id;
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
+	public Set<Receta> getRecetas() {
+		return recetas;
+	}
+
+
+	public void setRecetas(Set<Receta> recetas) {
+		this.recetas = recetas;
 	}
 	
-	public void setId(int id){
-		this.id=id;
-	}
 	
-	public String getNombre(){
-		return this.nombre;
-	}
-	
-	public void setNombre(String nombre){
-		this.nombre=nombre;
-	}
-	
-	public String getDescripcion(){
-		return this.descripcion;
-	}
-	
-	public void setDescripcion(String descripcion){
-		this.descripcion=descripcion;
-	}
 }

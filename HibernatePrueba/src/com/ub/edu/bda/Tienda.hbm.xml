@@ -13,8 +13,8 @@
         
 
        <set name="catalogos" table="TIENDA_CATALOGO" cascade="all">
-                       <key column="IDTIENDA" />
-                       <many-to-many column="IDCATALOGO" class="com.ub.edu.bda.Catalogo" />
-               </set>                                
+            <key column="IDTIENDA" />
+            <many-to-many column="IDCATALOGO" class="com.ub.edu.bda.Catalogo" />
+       </set>                                
    </class>
 </hibernate-mapping>
