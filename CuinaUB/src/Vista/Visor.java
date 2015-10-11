@@ -12,6 +12,7 @@ import org.hibernate.type.StringType;
 
 import Controlador.ConnectorHB;
 //import Modelo.Usuario;
+import Modelo.Usuario;
 
 public class Visor {
 	
@@ -25,13 +26,25 @@ public class Visor {
 	
 	static private String contrasenya="";
 	
-	static private enum MenuUsuario{ Crear_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
+	static private enum MenuReceta{ Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
+	static private enum MenuComida{ Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
+	static private enum MenuPlato{ Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
+	static private enum MenuIngrediente{ Añadir_Nuevo_Ingrediente,Consultar_Ingrediente,Actualizar_Ingrediente,Eliminar_Ingrediente,Salir};
+	static private enum MenuFamiliaIng{ Añadir_Nueva_Familia_Ingrediente,Consultar_Familia_Ingrediente,Actualizar_Familia_Ingrediente,Eliminar_Familia_Ingrediente,Salir};
+	static private enum MenuChef{ Añadir_Nuevo_Chef,Consultar_Chef,Actualizar_Chef,Eliminar_Chef,Salir};
+	static private enum MenuElemento{Receta,Tipo_Plato,Tipo_Comida,Chef,Ingrediente,Familia_Ingrediente,Salir};
 	
-	static private enum MenuElemento{Receta,Tipo_Plato,Tipo_Comida,Chef,Ingredientes,Salir};
+	private static String[] opcionsMenuReceta={ "Añadir_Nueva_Receta","Consultar_Receta","Actualizar_Receta","Eliminar_Receta","Salir"};
+	private static String[] opcionsMenuComida={ "Añadir_Nueva_Comida","Consultar_Comida","Actualizar_Comida","Eliminar_Comida","Salir"};
+	private static String[] opcionsMenuPlato={ "Añadir_Nuevo_Plato","Consultar_Plato","Actualizar_Plato","Eliminar_Plato","Salir"};
+	private static String[] opcionsMenuIngrediente={ "Añadir_Nuevo_Ingrediente","Consultar_Ingrediente","Actualizar_Ingrediente","Eliminar_Ingrediente","Salir"};
+	private static String[] opcionsMenuFamiliaIng={ "Añadir_Nueva_Familia_Ingrediente","Consultar_Familia_Ingrediente","Actualizar_Familia_Ingrediente","Eliminar_Familia_Ingrediente","Salir"};
+	private static String[] opcionsMenuChef={ "Añadir_Nueva_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
+	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingrediente","Familia_Ingrediente","Salir"};
 	
-	private static String[] opcionsMenuUsuario={"Crear_Receta","Consultar_Receta","Actualizar_Receta","Eliminar_Receta","Salir"};
+	private static ConnectorHB conector;
 	
-	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingredientes","Salir"};
+	private static Usuario user;
 	
 	
 	public static void main(String[] args){
@@ -44,67 +57,11 @@ public class Visor {
 			System.out.println("===========================================");
 			System.out.println("                 Welcome                   ");
 			System.out.println("===========================================");
-			test();
-		}
-		
-		//gestionMenuUsuario();
-		
+			user=new Usuario(usuario,contrasenya);
+			conector=new ConnectorHB();
+			gestionMenuPrincipal();
+		}	
 	}
-	
-	
-	public static void test(){
-		Session session = null;
-		Transaction tx=null;
-		try{
-			session=ConnectorHB.getSession();
-		}catch(HibernateException except){
-			except.printStackTrace();
-		}finally{
-			if(session!=null) session.close();
-		}
-	}
-	
-	
-	/**public void test(){
-		Session session = null;
-        Transaction tx = null;
-        Articulo art = new Articulo("Lavadora", "AEG", 4);
-        
-        try {
-            session = ConnectorHB.getSession();
-            tx = session.beginTransaction();
-            session.save(art);
-            //El objecto art esta enlazado
-            
-            art.setDescripcion("Seat Leon"); //Esto se modificara en la BD no los datos iniciales.
-            tx.commit();
-            
-            List<Catalogo> listado = new ArrayList<Catalogo>();
-            Query q = session.createQuery("from Catalogo");
-            listado = q.list();
-            
-            for (Catalogo catalogo : listado) {
-            	System.out.println(catalogo.getDescripcion());
-            	for(Articulo articulo: catalogo.getArticulos())
-                System.out.println(articulo.getDescripcion());
-            }
-            System.out.println("Proceso finalizado...");
-            //US DE QUERY SQL PER TROBAR OBJECTES
-           List <Articulo> articulos = session.createSQLQuery("SELECT * FROM ARTICULO").addEntity(Articulo.class).list();
-            for(Articulo articulo: articulos)
-                System.out.println(articulo.getDescripcion());
-            
-  
-            Query q1= session.createSQLQuery("SELECT descripcion from ARTICULO WHERE ID=1").addScalar("descripcion",StringType.INSTANCE);
-          System.out.println("HE OBTINGUT LA DESCRIPCIO: "+q1.list().get(0));
-            
-        } catch (HibernateException e) {
-            if(tx!=null && tx.isActive()) tx.rollback();
-            e.printStackTrace();
-        } finally {
-            if(session!=null) session.close();
-        }
-	}**/
 	
 	
 	private static boolean checkUser(String enterUsername,String enterPassaword){
@@ -119,39 +76,50 @@ public class Visor {
      * Método donde gestionamo nuestra primer menú textual.Donde usuario decide si empezar una
      * nueva partida o acabar.
      */
-    private static void gestionMenuUsuario(){
+    private static void gestionMenuPrincipal(){
         int opcion;
         boolean finalizar;
         finalizar=false;
         //Imprimimos el menu
-        printMenu(opcionsMenuUsuario);
+        printMenu(opcionsMenuElemento);
         while(!finalizar){
 	        //Guardamos la opcion escogida por el usuario
-	        opcion=getOpcion(sc,opcionsMenuUsuario);
+	        opcion=getOpcion(sc,opcionsMenuElemento);
 	        //Hacemos la conversion textual de la opcion escogida
-	        MenuUsuario opcionMenuInicio=MenuUsuario.valueOf(opcionsMenuUsuario[opcion-1]);
+	        MenuElemento opcionMenuInicio=MenuElemento.valueOf(opcionsMenuElemento[opcion-1]);
 	        switch(opcionMenuInicio){
-	            case Crear_Receta:     
+	            case Receta:     
 	            	nerrors=0;
-	            	gestionMenuElemento(sc);
+	            	gestionMenuReceta(sc);
 	                break;
-	            case Consultar_Receta:      
+	            case Tipo_Plato:      
 	            	nerrors=0;
-	            	gestionMenuElemento(sc);
+	            	gestionMenuPlato(sc);
 	            	break;
-	            case Actualizar_Receta:
+	            case Tipo_Comida:
 	            	nerrors=0;
-	            	gestionMenuElemento(sc);
+	            	gestionMenuComida(sc);
 	            	break;
-	            case Eliminar_Receta:
+	            case Ingrediente:
 	            	nerrors=0;
-	            	gestionMenuElemento(sc);
+	            	gestionMenuIngrediente(sc);
+	            	break;
+	            case Familia_Ingrediente:
+	            	nerrors=0;
+	            	gestionMenuFamiliaIng(sc);
+	            	break;
+	            case Chef:
+	            	nerrors=0;
+	            	gestionMenuChef(sc);
 	            	break;
 	            default:
+	            	System.out.println("Programa Finalizado");
 	            	finalizar=true;
 	                break;
 	        }
-	        printMenu(opcionsMenuUsuario);
+	        if(!finalizar){
+            	printMenu(opcionsMenuElemento);
+            } 
         }
     }
     
@@ -161,45 +129,239 @@ public class Visor {
      * aumentar apuesta o pasar su turno y acabar el juego.
      * @param sc 
      */
-    private static void gestionMenuElemento(Scanner sc){
+    private static void gestionMenuReceta(Scanner sc){
         int opcion;
         boolean salir;
         salir=false;
         //Imprimimos el menu
-        printMenu(opcionsMenuElemento);
+        printMenu(opcionsMenuReceta);
         while(!salir){        	
-            opcion=getOpcion(sc,opcionsMenuElemento);
-            MenuElemento opcionMenuElemento=MenuElemento.valueOf(opcionsMenuElemento[opcion-1]);
+            opcion=getOpcion(sc,opcionsMenuReceta);
+            MenuReceta opcionMenuElemento=MenuReceta.valueOf(opcionsMenuReceta[opcion-1]);
             switch(opcionMenuElemento){
-                case Receta:  
+                case Añadir_Nueva_Receta:  
                 	System.out.println("Has escogido la receta");
                 	nerrors=0;
                     break;
-                case Tipo_Plato:                   
+                case Consultar_Receta:                   
                 	System.out.println("Has escogido el tipo de plato");
                 	nerrors=0;
                     break;
-                case Tipo_Comida:                    
+                case Actualizar_Receta:                    
                 	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
                     break;
-                case Chef:
+                case Eliminar_Receta:
                 	System.out.println("Has escogido el chef");
                 	nerrors=0;
                 	break;
-                case Ingredientes:
-                	System.out.println("Has escogido los ingredientes");
-                	nerrors=0;
-                	break;
                 default:
+                	System.out.println("Volviendo al menu principal");
                 	salir=true;
                     break;
             }
-            printMenu(opcionsMenuElemento);
+            if(!salir){
+            	printMenu(opcionsMenuReceta);
+            } 
         }
     }
 
 	
+    private static void gestionMenuComida(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuComida);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuComida);
+            MenuComida opcionMenuElemento=MenuComida.valueOf(opcionsMenuComida[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nueva_Comida:  
+                	System.out.println("Has escogido la receta");
+                	nerrors=0;
+                    break;
+                case Consultar_Comida:                   
+                	System.out.println("Has escogido el tipo de plato");
+                	nerrors=0;
+                    break;
+                case Actualizar_Comida:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Comida:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuComida);
+            } 
+        }
+    }
+    
+    
+    private static void gestionMenuPlato(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuPlato);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuPlato);
+            MenuPlato opcionMenuElemento=MenuPlato.valueOf(opcionsMenuPlato[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nuevo_Plato:  
+                	System.out.println("Has escogido la receta");
+                	nerrors=0;
+                    break;
+                case Consultar_Plato:                   
+                	System.out.println("Has escogido el tipo de plato");
+                	nerrors=0;
+                    break;
+                case Actualizar_Plato:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Plato:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuComida);
+            } 
+        }
+    }
+    
+    
+    
+    private static void gestionMenuIngrediente(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuIngrediente);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuIngrediente);
+            MenuIngrediente opcionMenuElemento=MenuIngrediente.valueOf(opcionsMenuIngrediente[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nuevo_Ingrediente:  
+                	System.out.println("Has escogido la receta");
+                	nerrors=0;
+                    break;
+                case Consultar_Ingrediente:                   
+                	System.out.println("Has escogido el tipo de plato");
+                	nerrors=0;
+                    break;
+                case Actualizar_Ingrediente:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Ingrediente:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuIngrediente);
+            } 
+        }
+    }
+    
+    
+    
+    private static void gestionMenuFamiliaIng(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuFamiliaIng);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuFamiliaIng);
+            MenuFamiliaIng opcionMenuElemento=MenuFamiliaIng.valueOf(opcionsMenuFamiliaIng[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nueva_Familia_Ingrediente:  
+                	System.out.println("Has escogido la receta");
+                	nerrors=0;
+                    break;
+                case Consultar_Familia_Ingrediente:                   
+                	System.out.println("Has escogido el tipo de plato");
+                	nerrors=0;
+                    break;
+                case Actualizar_Familia_Ingrediente:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Familia_Ingrediente:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuFamiliaIng);
+            } 
+        }
+    }
+    
+    
+    
+    private static void gestionMenuChef(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuChef);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuChef);
+            MenuChef opcionMenuElemento=MenuChef.valueOf(opcionsMenuChef[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nuevo_Chef:  
+                	System.out.println("Has escogido la receta");
+                	nerrors=0;
+                    break;
+                case Consultar_Chef:                   
+                	System.out.println("Has escogido el tipo de plato");
+                	nerrors=0;
+                    break;
+                case Actualizar_Chef:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Chef:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuChef);
+            }           
+        }
+    }
+    
+    
+    
+    
 	/**
      * Método donde pedimos la entrada por el teclado la opcion que quiere escoger el 
      * usuario
@@ -237,7 +399,7 @@ public class Visor {
             System.out.println("    "+(i+1)+"."+menu[i]);
         }
         System.out.println("================================");
-        System.out.println("Escull una opcio:");
+        System.out.println("Escoge una opcion:");
     }
     
     

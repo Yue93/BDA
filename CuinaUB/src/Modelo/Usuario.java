@@ -5,7 +5,8 @@ public class Usuario{
 	private String password;
 	
 	public Usuario(String nombre, String password){
-		
+		this.nombre=nombre;
+		this.password=password;
 	}
 	
 	public String getNombre(){
