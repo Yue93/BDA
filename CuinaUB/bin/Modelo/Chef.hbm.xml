@@ -4,19 +4,16 @@
 <!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Chef" table="CHEF">
-        <id name="apellido" type="java.lang.String">
-            <column name="APELLIDO" />
-            <generator class="assigned" />
+        <id name="id" column="ID" type="int">
+            <generator class="identity" />
         </id>
-        <property name="nombre" type="java.lang.String">
-            <column name="NOMBRE" />
-        </property>
-        <property name="nEstrellas" type="int" access="field">
-            <column name="NESTRELLAS" />
-        </property>
+        
+        <property name="nombre" column="NOMBRE" type="java.lang.String"/>
+        <property name="apellido" column="APELLIDO" type="java.lang.String"/>
+        <property name="nEstrellas" column="NESTRELLAS" type="int" access="field"/>
         <set name="recetas" table="RECETA" inverse="false" lazy="true" cascade="all">
             <key>
-                <column name="APELLIDO" />
+                <column name="ID" />
             </key>
             <one-to-many class="Modelo.Receta" />
         </set>

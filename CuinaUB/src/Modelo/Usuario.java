@@ -1,12 +1,28 @@
 package Modelo;
 
 public class Usuario{
+	int id;
 	private String nombre;
 	private String password;
+	
+	public Usuario(int id,String nombre, String password){
+		this.id=id;
+		this.nombre=nombre;
+		this.password=password;
+	}
 	
 	public Usuario(String nombre, String password){
 		this.nombre=nombre;
 		this.password=password;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getNombre(){

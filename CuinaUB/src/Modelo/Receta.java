@@ -105,6 +105,4 @@ public class Receta {
 	public void setIngredientes(Set<Ingrediente> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
-	
-	
 }

@@ -1,6 +1,7 @@
 package Vista;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,11 @@ import org.hibernate.Transaction;
 import org.hibernate.type.StringType;
 
 import Controlador.ConnectorHB;
+import Modelo.Chef;
+import Modelo.Comida;
+import Modelo.FamiliaIng;
+import Modelo.Ingrediente;
+import Modelo.Plato;
 import Modelo.Receta;
 //import Modelo.Usuario;
 import Modelo.Usuario;
@@ -62,7 +68,9 @@ public class Visor {
 			conector=new ConnectorHB();
 			conector.conectar();
 			gestionMenuPrincipal();
-		}	
+		}else{
+			System.out.println("Usuario o contraseña incorrecto!");
+		}
 	}
 	
 	
@@ -150,9 +158,9 @@ public class Visor {
                 	nerrors=0;
                 	conector.listReceta();
                     break;
-                case Actualizar_Receta:                    
-                	System.out.println("Has escogido el tipo de comida");
+                case Actualizar_Receta:        
                 	nerrors=0;
+                	conector.listReceta();
                     break;
                 case Eliminar_Receta:
                 	System.out.println("Has escogido el chef");
@@ -170,17 +178,26 @@ public class Visor {
     }
 
     private static void afegirReceta(){
-    	System.out.println("Nombre de la receta?");
-    	String nombre=sc.next();
-    	System.out.println("Descripcion de la elaboracion?");
-    	String elaboracion=sc.nextLine();
-    	sc.nextLine();
-    	System.out.println("Dificultat de la elaboracion(1 a 10)?");
-    	int dificultat=sc.nextInt();
-    	System.out.println("Tiempo de eleboracion(en segundo)?");
-    	int tiempo=sc.nextInt();
-    	Receta receta=new Receta(nombre," ",dificultat,tiempo);
-    	conector.saveReceta(receta);
+    	try{
+    		System.out.println("Nombre de la receta?");
+        	sc.nextLine();
+        	String nombre=sc.nextLine();
+        	System.out.println("Tiempo de eleboracion(en segundo)?");
+        	int tiempo=sc.nextInt();
+        	System.out.println("Descripcion de la elaboracion?");
+        	sc.nextLine();
+        	String elaboracion=sc.nextLine();
+        	System.out.println("Dificultat de la elaboracion(1 a 10)?");
+        	int dificultat=sc.nextInt();
+        	
+        	Receta receta=new Receta(nombre,elaboracion,dificultat,tiempo);
+        	conector.saveReceta(receta);
+    	}catch(NumberFormatException e ){
+    		System.out.println("Formato incorrecto!");
+    	}catch(InputMismatchException ime){
+    		System.out.println("Dato introducido incorrecto!");
+    	}
+    	
     }
 	
     private static void gestionMenuComida(Scanner sc){
@@ -194,20 +211,21 @@ public class Visor {
             MenuComida opcionMenuElemento=MenuComida.valueOf(opcionsMenuComida[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nueva_Comida:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirComida();
                     break;
                 case Consultar_Comida:                   
-                	System.out.println("Has escogido el tipo de plato");
                 	nerrors=0;
+                	conector.listComida();
                     break;
                 case Actualizar_Comida:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	System.out.println("Has escogido el tipo de comida");
+                	conector.listComida();
                     break;
                 case Eliminar_Comida:
-                	System.out.println("Has escogido el chef");
                 	nerrors=0;
+                	System.out.println("Has escogido el chef");
                 	break;
                 default:
                 	System.out.println("Volviendo al menu principal");
@@ -220,6 +238,16 @@ public class Visor {
         }
     }
     
+    
+    private static void afegirComida(){
+    	System.out.println("Nombre de la comidas:");
+    	sc.nextLine();
+    	String nombre=sc.nextLine(); 	
+    	System.out.println("Descripcion:");
+    	String descripcion=sc.nextLine();
+    	Comida comida=new Comida(nombre,descripcion);
+    	conector.saveComida(comida);
+    }
     
     private static void gestionMenuPlato(Scanner sc){
         int opcion;
@@ -232,16 +260,17 @@ public class Visor {
             MenuPlato opcionMenuElemento=MenuPlato.valueOf(opcionsMenuPlato[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nuevo_Plato:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirPlato();
                     break;
-                case Consultar_Plato:                   
-                	System.out.println("Has escogido el tipo de plato");
+                case Consultar_Plato:    
                 	nerrors=0;
+                	conector.listPlato();
                     break;
                 case Actualizar_Plato:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	System.out.println("Has escogido el tipo de comida");
+                	conector.listPlato();
                     break;
                 case Eliminar_Plato:
                 	System.out.println("Has escogido el chef");
@@ -253,11 +282,20 @@ public class Visor {
                     break;
             }
             if(!salir){
-            	printMenu(opcionsMenuComida);
+            	printMenu(opcionsMenuPlato);
             } 
         }
     }
     
+    private static void afegirPlato(){
+    	System.out.println("Que tipo de plato es?");
+    	sc.nextLine();
+    	String nombre=sc.nextLine(); 	
+    	System.out.println("Descripcion:");
+    	String descripcion=sc.nextLine();
+    	Plato plato=new Plato(nombre,descripcion);
+    	conector.savePlato(plato);
+    }
     
     
     private static void gestionMenuIngrediente(Scanner sc){
@@ -271,21 +309,22 @@ public class Visor {
             MenuIngrediente opcionMenuElemento=MenuIngrediente.valueOf(opcionsMenuIngrediente[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nuevo_Ingrediente:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirIngrediente();
                     break;
-                case Consultar_Ingrediente:                   
-                	System.out.println("Has escogido el tipo de plato");
-                	conector.listIngredientes();
+                case Consultar_Ingrediente:          
                 	nerrors=0;
+                	conector.listIngrediente();
                     break;
-                case Actualizar_Ingrediente:                    
+                case Actualizar_Ingrediente:   
+                	nerrors=0;
                 	System.out.println("Has escogido el tipo de comida");
-                	nerrors=0;
+                	conector.listIngrediente();
                     break;
                 case Eliminar_Ingrediente:
-                	System.out.println("Has escogido el chef");
                 	nerrors=0;
+                	System.out.println("Has escogido el chef");
+                	
                 	break;
                 default:
                 	System.out.println("Volviendo al menu principal");
@@ -298,6 +337,29 @@ public class Visor {
         }
     }
     
+    //Not finish method
+    private static void afegirIngrediente(){
+    	try{
+	    	boolean boolRefrigeracion=false;
+	    	FamiliaIng familia=null;
+	    	System.out.println("Nombre del ingrediente:");
+	    	sc.nextLine();
+	    	String nombre=sc.nextLine(); 	
+	    	System.out.println("Refrigeracion? Yes(y)/No(n)");
+	    	String refrigeracion=sc.next();
+	    	if(refrigeracion.toLowerCase().equals("y")){
+	    		boolRefrigeracion=true;
+	    	}
+	    	conector.listFamiliaIng();
+	    	System.out.println("Id de la familia a la que pertenece?");
+	    	int idFamilia=sc.nextInt();
+	    	familia=conector.getFamiliaIng(idFamilia);
+	    	Ingrediente ingrediente=new Ingrediente(nombre,familia,boolRefrigeracion);
+	    	conector.saveIngrediente(ingrediente);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Tipo de datos incorrecto!");
+    	}
+    }
     
     
     private static void gestionMenuFamiliaIng(Scanner sc){
@@ -311,16 +373,17 @@ public class Visor {
             MenuFamiliaIng opcionMenuElemento=MenuFamiliaIng.valueOf(opcionsMenuFamiliaIng[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nueva_Familia_Ingrediente:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirFamiliaIng();
                     break;
-                case Consultar_Familia_Ingrediente:                   
-                	System.out.println("Has escogido el tipo de plato");
+                case Consultar_Familia_Ingrediente:   
                 	nerrors=0;
+                	conector.listFamiliaIng();
                     break;
-                case Actualizar_Familia_Ingrediente:                    
+                case Actualizar_Familia_Ingrediente:    
+                	nerrors=0;
                 	System.out.println("Has escogido el tipo de comida");
-                	nerrors=0;
+                	conector.listFamiliaIng();
                     break;
                 case Eliminar_Familia_Ingrediente:
                 	System.out.println("Has escogido el chef");
@@ -337,7 +400,15 @@ public class Visor {
         }
     }
     
-    
+    private static void afegirFamiliaIng(){
+    	System.out.println("Nombre de la familia:");
+    	sc.nextLine();
+    	String nombre=sc.nextLine(); 	
+    	System.out.println("Descripcion:");
+    	String descripcion=sc.nextLine();
+    	FamiliaIng familia=new FamiliaIng(nombre,descripcion);
+    	conector.saveFamiliaIng(familia);
+    }
     
     private static void gestionMenuChef(Scanner sc){
         int opcion;
@@ -350,16 +421,17 @@ public class Visor {
             MenuChef opcionMenuElemento=MenuChef.valueOf(opcionsMenuChef[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nuevo_Chef:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirChef();
                     break;
                 case Consultar_Chef:                   
-                	System.out.println("Has escogido el tipo de plato");
                 	nerrors=0;
+                	conector.listChef();
                     break;
-                case Actualizar_Chef:                    
-                	System.out.println("Has escogido el tipo de comida");
+                case Actualizar_Chef:       
                 	nerrors=0;
+                	System.out.println("Has escogido el tipo de comida");
+                	conector.listChef();
                     break;
                 case Eliminar_Chef:
                 	System.out.println("Has escogido el chef");
@@ -376,7 +448,21 @@ public class Visor {
         }
     }
     
-    
+    private static void afegirChef(){
+    	try{
+    		System.out.println("Nombre del chef:");
+        	String nombre=sc.next();
+        	System.out.println("Apellido del chef:");
+        	String apellido=sc.next();
+        	System.out.println("Numero de estrella michelin:");
+        	int nEstrella=sc.nextInt();
+        	Chef chef=new Chef(nombre,apellido,nEstrella);
+        	conector.saveChef(chef);
+    	}catch(InputMismatchException e){
+    		System.out.println("Dato introducido incorrecto!");
+    	}
+    	
+    }
     
     
 	/**

@@ -4,16 +4,17 @@
 <!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Ingrediente" table="INGREDIENTE">
-        <id name="nombre" type="java.lang.String">
-            <column name="NOMBRE" />
-            <generator class="assigned" />
+        <id name="id" column="ID" type="int">
+            <generator class="identity" />
         </id>
+        
+        <property name="nombre" column="NOMBRE" type="java.lang.String" unique="true"/>
+        <property name="refrigeracion" column="REFRIGERACION" type="boolean"/>
+        
         <many-to-one name="familia" class="Modelo.FamiliaIng" fetch="join">
             <column name="FAMILIA" />
         </many-to-one>
-        <property name="refrigeracion" type="boolean">
-            <column name="REFRIGERACION" />
-        </property>
+
         <set name="recetas" table="RECETA_INGREDIENTE" cascade="all">
             <key column="IDINGREDIENTE" />
             <many-to-many column="IDRECETA" class="Modelo.Receta" />

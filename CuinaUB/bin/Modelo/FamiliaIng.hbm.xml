@@ -1,19 +1,16 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
+
 <hibernate-mapping>
     <class name="Modelo.FamiliaIng" table="FAMILIAING">
-        <id name="id" type="int">
-            <column name="ID" />
+        <id name="id" column="ID" type="int">
             <generator class="assigned" />
         </id>
-        <property name="nombre" type="java.lang.String">
-            <column name="NOMBRE" />
-        </property>
-        <property name="descripcion" type="java.lang.String">
-            <column name="DESCRIPCION" />
-        </property>
+        
+        <property name="nombre" column="NOMBRE" type="java.lang.String" unique="true"/>
+        <property name="descripcion" column="DESCRIPCION" type="java.lang.String"/>
+
         <set name="ingredientes" table="INGREDIENTE" inverse="false" lazy="true" cascade="all">
             <key>
                 <column name="ID" />
