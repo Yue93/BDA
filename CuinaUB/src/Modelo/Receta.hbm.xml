@@ -1,25 +1,18 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
+
 <hibernate-mapping>
     <class name="Modelo.Receta" table="RECETA">
-        <id name="id" type="int">
-            <column name="ID" />
-            <generator class="assigned" />
+        <id name="id" column="ID" type="int">
+            <generator class="identity" />
         </id>
-        <property name="nombre" type="java.lang.String">
-            <column name="NOMBRE" />
-        </property>
-        <property name="elaboracion" type="java.lang.String">
-            <column name="ELABORACION" />
-        </property>
-        <property name="dificultad" type="int">
-            <column name="DIFICULTAD" />
-        </property>
-        <property name="tiempo" type="int">
-            <column name="TIEMPO" />
-        </property>
+        
+        <property name="nombre" column="NOMBRE" type="java.lang.String"/>
+        <property name="elaboracion" column="ELABORACION" type="java.lang.String"/>
+        <property name="dificultad" column="DIFICULTAD" type="int"/>
+        <property name="tiempo" column="TIEMPO" type="int"/>
+
         <many-to-one name="comida" class="Modelo.Comida" fetch="join">
             <column name="COMIDA" />
         </many-to-one>
@@ -29,6 +22,7 @@
         <many-to-one name="chef" class="Modelo.Chef" fetch="join">
             <column name="CHEF" />
         </many-to-one>
+        
         <set name="ingredientes" table="RECETA_INGREDIENTE" cascade="all">
             <key column="IDRECETA" />
             <many-to-many column="IDINGREIDENTE" class="Modelo.Ingrediente" />

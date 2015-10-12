@@ -3,6 +3,7 @@ package Modelo;
 import java.util.Set;
 
 public class Ingrediente {
+	private int id;
 	private String nombre;
 	private FamiliaIng familia;
 	private boolean refrigeracion;
@@ -13,12 +14,27 @@ public class Ingrediente {
 		
 	}
 	
+	public Ingrediente(int id,String nombre,FamiliaIng familia,boolean refrigeracion){
+		this.id=id;
+		this.nombre=nombre;
+		this.familia=familia;
+		this.refrigeracion=refrigeracion;
+	}
+	
 	public Ingrediente(String nombre,FamiliaIng familia,boolean refrigeracion){
 		this.nombre=nombre;
 		this.familia=familia;
 		this.refrigeracion=refrigeracion;
 	}
 
+	public int getId(){
+		return id;
+	}
+	
+	public void setId(int id){
+		this.id=id;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

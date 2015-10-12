@@ -3,6 +3,7 @@ package Modelo;
 import java.util.Set;
 
 public class Chef {
+	private int id;
 	private String nombre;
 	private String apellido;
 	private int nEstrellas;
@@ -13,12 +14,26 @@ public class Chef {
 		
 	}
 	
+	public Chef(int id,String nombre,String apellido,int nEstrellas){
+		this.id=id;
+		this.nombre=nombre;
+		this.apellido=apellido;
+		this.nEstrellas=nEstrellas;
+	}
+	
 	public Chef(String nombre,String apellido,int nEstrellas){
 		this.nombre=nombre;
 		this.apellido=apellido;
 		this.nEstrellas=nEstrellas;
 	}
 	
+	public int getId(){
+		return this.id;
+	}
+	
+	public void setId(int id){
+		this.id=id;
+	}
 	
 	public String getNombre(){
 		return this.nombre;

@@ -11,6 +11,11 @@ import org.hibernate.Transaction;
 import org.hibernate.type.StringType;
 
 import Controlador.ConnectorHB;
+import Modelo.Chef;
+import Modelo.Comida;
+import Modelo.FamiliaIng;
+import Modelo.Ingrediente;
+import Modelo.Plato;
 import Modelo.Receta;
 //import Modelo.Usuario;
 import Modelo.Usuario;
@@ -27,9 +32,9 @@ public class Visor {
 	
 	static private String contrasenya="";
 	
-	static private enum MenuReceta{ Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
-	static private enum MenuComida{ Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
-	static private enum MenuPlato{ Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
+	static private enum MenuReceta{Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
+	static private enum MenuComida{Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
+	static private enum MenuPlato{Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
 	static private enum MenuIngrediente{ Añadir_Nuevo_Ingrediente,Consultar_Ingrediente,Actualizar_Ingrediente,Eliminar_Ingrediente,Salir};
 	static private enum MenuFamiliaIng{ Añadir_Nueva_Familia_Ingrediente,Consultar_Familia_Ingrediente,Actualizar_Familia_Ingrediente,Eliminar_Familia_Ingrediente,Salir};
 	static private enum MenuChef{ Añadir_Nuevo_Chef,Consultar_Chef,Actualizar_Chef,Eliminar_Chef,Salir};
@@ -40,7 +45,7 @@ public class Visor {
 	private static String[] opcionsMenuPlato={ "Añadir_Nuevo_Plato","Consultar_Plato","Actualizar_Plato","Eliminar_Plato","Salir"};
 	private static String[] opcionsMenuIngrediente={ "Añadir_Nuevo_Ingrediente","Consultar_Ingrediente","Actualizar_Ingrediente","Eliminar_Ingrediente","Salir"};
 	private static String[] opcionsMenuFamiliaIng={ "Añadir_Nueva_Familia_Ingrediente","Consultar_Familia_Ingrediente","Actualizar_Familia_Ingrediente","Eliminar_Familia_Ingrediente","Salir"};
-	private static String[] opcionsMenuChef={ "Añadir_Nueva_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
+	private static String[] opcionsMenuChef={ "Añadir_Nuevo_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
 	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingrediente","Familia_Ingrediente","Salir"};
 	
 	private static ConnectorHB conector;
@@ -126,6 +131,7 @@ public class Visor {
         }
     }
     
+    /*RECETA*/
     
     /**
      * Método de gestion del menú del juego.Donde usuario debe escoger si quiere robar una carta
@@ -151,11 +157,11 @@ public class Visor {
                 	conector.listReceta();
                     break;
                 case Actualizar_Receta:                    
-                	System.out.println("Has escogido el tipo de comida");
+                	System.out.println("Has escogido actualizar receta");
                 	nerrors=0;
                     break;
                 case Eliminar_Receta:
-                	System.out.println("Has escogido el chef");
+                	System.out.println("Has escogido eliminar receta");
                 	nerrors=0;
                 	break;
                 default:
@@ -170,19 +176,70 @@ public class Visor {
     }
 
     private static void afegirReceta(){
-    	System.out.println("Nombre de la receta?");
+    	System.out.println("Nombre de la receta:");
     	String nombre=sc.next();
-    	System.out.println("Descripcion de la elaboracion?");
+    	System.out.println("Descripcion de la elaboracion:");
     	String elaboracion=sc.nextLine();
     	sc.nextLine();
-    	System.out.println("Dificultat de la elaboracion(1 a 10)?");
+    	System.out.println("Dificultat de la elaboracion(1 a 10):");
     	int dificultat=sc.nextInt();
-    	System.out.println("Tiempo de eleboracion(en segundo)?");
+    	System.out.println("Tiempo de eleboracion (en minutos):");
     	int tiempo=sc.nextInt();
     	Receta receta=new Receta(nombre," ",dificultat,tiempo);
     	conector.saveReceta(receta);
     }
 	
+    
+    /*PLATO*/
+    private static void gestionMenuPlato(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuPlato);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuPlato);
+            MenuPlato opcionMenuElemento=MenuPlato.valueOf(opcionsMenuPlato[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nuevo_Plato:  
+                	nerrors=0;
+                	afegirPlato();
+                    break;
+                case Consultar_Plato:
+                	nerrors=0;
+                	conector.listPlato();
+                    break;
+                case Actualizar_Plato:                    
+                	System.out.println("Has escogido el tipo de comida");
+                	nerrors=0;
+                    break;
+                case Eliminar_Plato:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuPlato);
+            } 
+        }
+    }
+    
+    private static void afegirPlato(){
+    	System.out.println("Nombre del plato: ");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion del plato: ");
+    	String descripcion=sc.nextLine();
+    	sc.nextLine();
+    	
+    	Plato plato=new Plato(nombre,descripcion);
+    	conector.savePlato(plato);
+    }    
+    
+    /*COMIDA*/
     private static void gestionMenuComida(Scanner sc){
         int opcion;
         boolean salir;
@@ -194,12 +251,12 @@ public class Visor {
             MenuComida opcionMenuElemento=MenuComida.valueOf(opcionsMenuComida[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nueva_Comida:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirComida();
                     break;
-                case Consultar_Comida:                   
-                	System.out.println("Has escogido el tipo de plato");
+                case Consultar_Comida:
                 	nerrors=0;
+                	conector.listComida();
                     break;
                 case Actualizar_Comida:                    
                 	System.out.println("Has escogido el tipo de comida");
@@ -220,46 +277,18 @@ public class Visor {
         }
     }
     
+    private static void afegirComida(){
+    	System.out.println("Nombre de la comida: ");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion: ");
+    	String descripcion=sc.nextLine();
+    	sc.nextLine();
+    	
+    	Comida comida=new Comida(nombre,descripcion);
+    	conector.saveComida(comida);
+    } 
     
-    private static void gestionMenuPlato(Scanner sc){
-        int opcion;
-        boolean salir;
-        salir=false;
-        //Imprimimos el menu
-        printMenu(opcionsMenuPlato);
-        while(!salir){        	
-            opcion=getOpcion(sc,opcionsMenuPlato);
-            MenuPlato opcionMenuElemento=MenuPlato.valueOf(opcionsMenuPlato[opcion-1]);
-            switch(opcionMenuElemento){
-                case Añadir_Nuevo_Plato:  
-                	System.out.println("Has escogido la receta");
-                	nerrors=0;
-                    break;
-                case Consultar_Plato:                   
-                	System.out.println("Has escogido el tipo de plato");
-                	nerrors=0;
-                    break;
-                case Actualizar_Plato:                    
-                	System.out.println("Has escogido el tipo de comida");
-                	nerrors=0;
-                    break;
-                case Eliminar_Plato:
-                	System.out.println("Has escogido el chef");
-                	nerrors=0;
-                	break;
-                default:
-                	System.out.println("Volviendo al menu principal");
-                	salir=true;
-                    break;
-            }
-            if(!salir){
-            	printMenu(opcionsMenuComida);
-            } 
-        }
-    }
-    
-    
-    
+    /*INGREDIENTE*/
     private static void gestionMenuIngrediente(Scanner sc){
         int opcion;
         boolean salir;
@@ -271,11 +300,11 @@ public class Visor {
             MenuIngrediente opcionMenuElemento=MenuIngrediente.valueOf(opcionsMenuIngrediente[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nuevo_Ingrediente:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirIngrediente();
                     break;
                 case Consultar_Ingrediente:                   
-                	System.out.println("Has escogido el tipo de plato");
+                	System.out.println("Lista de ingredientes"+"\n");
                 	conector.listIngredientes();
                 	nerrors=0;
                     break;
@@ -298,8 +327,23 @@ public class Visor {
         }
     }
     
+    private static void afegirIngrediente(){
+    	System.out.println("Nombre del ingrediente: ");
+    	String nombre=sc.next();
+    	System.out.println("Familia a la que pertenece el ingrediente: ");
+    	FamiliaIng familia=new FamiliaIng();
+    	sc.nextLine();
+    	sc.nextLine();
+    	System.out.println("Necesita refrigeracion? ");
+    	boolean refrigeracion=sc.hasNextBoolean();
+    	sc.nextLine();
+    	
+    	
+    	Ingrediente ingrediente=new Ingrediente(nombre,familia,refrigeracion);
+    	conector.saveIngrediente(ingrediente);
+    }
     
-    
+    /*FAMILIA ING*/
     private static void gestionMenuFamiliaIng(Scanner sc){
         int opcion;
         boolean salir;
@@ -311,13 +355,13 @@ public class Visor {
             MenuFamiliaIng opcionMenuElemento=MenuFamiliaIng.valueOf(opcionsMenuFamiliaIng[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nueva_Familia_Ingrediente:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirFamiliaIng();
                     break;
                 case Consultar_Familia_Ingrediente:                   
-                	System.out.println("Has escogido el tipo de plato");
                 	nerrors=0;
-                    break;
+                    conector.listFamiliaIng();
+                	break;
                 case Actualizar_Familia_Ingrediente:                    
                 	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
@@ -337,8 +381,18 @@ public class Visor {
         }
     }
     
+    private static void afegirFamiliaIng(){
+    	System.out.println("Tipo de familia: ");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion: ");
+    	String descripcion=sc.nextLine();
+    	sc.nextLine();
+    	
+    	FamiliaIng familiaing=new FamiliaIng(nombre,descripcion);
+    	conector.saveFamiliaIng(familiaing);
+    }
     
-    
+    /*CHEF*/
     private static void gestionMenuChef(Scanner sc){
         int opcion;
         boolean salir;
@@ -350,12 +404,12 @@ public class Visor {
             MenuChef opcionMenuElemento=MenuChef.valueOf(opcionsMenuChef[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nuevo_Chef:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirChef();
                     break;
                 case Consultar_Chef:                   
-                	System.out.println("Has escogido el tipo de plato");
                 	nerrors=0;
+                	conector.listChef();
                     break;
                 case Actualizar_Chef:                    
                 	System.out.println("Has escogido el tipo de comida");
@@ -376,7 +430,18 @@ public class Visor {
         }
     }
     
-    
+    private static void afegirChef(){
+    	System.out.println("Nombre del Chef: ");
+    	String nombre=sc.next();
+    	System.out.println("Apellido del Chef: ");
+    	String apellido=sc.nextLine();
+    	sc.nextLine();
+    	System.out.println("Numero de estrellas Michellen: ");
+    	int nEstrellas=sc.nextInt();
+    	
+    	Chef chef=new Chef(nombre,apellido,nEstrellas);
+    	conector.saveChef(chef);
+    }
     
     
 	/**
