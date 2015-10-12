@@ -2,16 +2,16 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/commons-collections-3.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/hibernate-commons-annotations-4.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/hibernate-core-4.1.0.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/javassist-3.15.0-GA.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/jboss-logging-3.1.0.CR2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
-	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/postgresql-9.4-1203.jdbc41.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/hibernate-commons-annotations-4.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/hibernate-core-4.1.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/javassist-3.15.0-GA.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/jboss-logging-3.1.0.CR2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/postgresql-9.4-1203.jdbc41.jar"/>
 	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/sqlite-jdbc-3.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

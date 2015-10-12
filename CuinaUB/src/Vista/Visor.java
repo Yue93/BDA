@@ -33,9 +33,9 @@ public class Visor {
 	
 	static private String contrasenya="";
 	
-	static private enum MenuReceta{ Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
-	static private enum MenuComida{ Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
-	static private enum MenuPlato{ Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
+	static private enum MenuReceta{Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
+	static private enum MenuComida{Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
+	static private enum MenuPlato{Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
 	static private enum MenuIngrediente{ Añadir_Nuevo_Ingrediente,Consultar_Ingrediente,Actualizar_Ingrediente,Eliminar_Ingrediente,Salir};
 	static private enum MenuFamiliaIng{ Añadir_Nueva_Familia_Ingrediente,Consultar_Familia_Ingrediente,Actualizar_Familia_Ingrediente,Eliminar_Familia_Ingrediente,Salir};
 	static private enum MenuChef{ Añadir_Nuevo_Chef,Consultar_Chef,Actualizar_Chef,Eliminar_Chef,Salir};
@@ -46,7 +46,7 @@ public class Visor {
 	private static String[] opcionsMenuPlato={ "Añadir_Nuevo_Plato","Consultar_Plato","Actualizar_Plato","Eliminar_Plato","Salir"};
 	private static String[] opcionsMenuIngrediente={ "Añadir_Nuevo_Ingrediente","Consultar_Ingrediente","Actualizar_Ingrediente","Eliminar_Ingrediente","Salir"};
 	private static String[] opcionsMenuFamiliaIng={ "Añadir_Nueva_Familia_Ingrediente","Consultar_Familia_Ingrediente","Actualizar_Familia_Ingrediente","Eliminar_Familia_Ingrediente","Salir"};
-	private static String[] opcionsMenuChef={ "Añadir_Nueva_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
+	private static String[] opcionsMenuChef={ "Añadir_Nuevo_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
 	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingrediente","Familia_Ingrediente","Salir"};
 	
 	private static ConnectorHB conector;
@@ -134,6 +134,7 @@ public class Visor {
         }
     }
     
+    /*RECETA*/
     
     /**
      * Método de gestion del menú del juego.Donde usuario debe escoger si quiere robar una carta
@@ -163,7 +164,7 @@ public class Visor {
                 	conector.listReceta();
                     break;
                 case Eliminar_Receta:
-                	System.out.println("Has escogido el chef");
+                	System.out.println("Has escogido eliminar receta");
                 	nerrors=0;
                 	break;
                 default:
@@ -197,58 +198,10 @@ public class Visor {
     	}catch(InputMismatchException ime){
     		System.out.println("Dato introducido incorrecto!");
     	}
-    	
     }
 	
-    private static void gestionMenuComida(Scanner sc){
-        int opcion;
-        boolean salir;
-        salir=false;
-        //Imprimimos el menu
-        printMenu(opcionsMenuComida);
-        while(!salir){        	
-            opcion=getOpcion(sc,opcionsMenuComida);
-            MenuComida opcionMenuElemento=MenuComida.valueOf(opcionsMenuComida[opcion-1]);
-            switch(opcionMenuElemento){
-                case Añadir_Nueva_Comida:  
-                	nerrors=0;
-                	afegirComida();
-                    break;
-                case Consultar_Comida:                   
-                	nerrors=0;
-                	conector.listComida();
-                    break;
-                case Actualizar_Comida:                    
-                	nerrors=0;
-                	System.out.println("Has escogido el tipo de comida");
-                	conector.listComida();
-                    break;
-                case Eliminar_Comida:
-                	nerrors=0;
-                	System.out.println("Has escogido el chef");
-                	break;
-                default:
-                	System.out.println("Volviendo al menu principal");
-                	salir=true;
-                    break;
-            }
-            if(!salir){
-            	printMenu(opcionsMenuComida);
-            } 
-        }
-    }
     
-    
-    private static void afegirComida(){
-    	System.out.println("Nombre de la comidas:");
-    	sc.nextLine();
-    	String nombre=sc.nextLine(); 	
-    	System.out.println("Descripcion:");
-    	String descripcion=sc.nextLine();
-    	Comida comida=new Comida(nombre,descripcion);
-    	conector.saveComida(comida);
-    }
-    
+    /*PLATO*/
     private static void gestionMenuPlato(Scanner sc){
         int opcion;
         boolean salir;
@@ -263,18 +216,18 @@ public class Visor {
                 	nerrors=0;
                 	afegirPlato();
                     break;
-                case Consultar_Plato:    
+                case Consultar_Plato:                   
                 	nerrors=0;
                 	conector.listPlato();
                     break;
                 case Actualizar_Plato:                    
                 	nerrors=0;
                 	System.out.println("Has escogido el tipo de comida");
-                	conector.listPlato();
+                	conector.listComida();
                     break;
                 case Eliminar_Plato:
-                	System.out.println("Has escogido el chef");
                 	nerrors=0;
+                	System.out.println("Has escogido el chef");
                 	break;
                 default:
                 	System.out.println("Volviendo al menu principal");
@@ -288,16 +241,67 @@ public class Visor {
     }
     
     private static void afegirPlato(){
-    	System.out.println("Que tipo de plato es?");
-    	sc.nextLine();
-    	String nombre=sc.nextLine(); 	
-    	System.out.println("Descripcion:");
+    	System.out.println("Nombre del plato: ");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion del plato: ");
     	String descripcion=sc.nextLine();
+    	sc.nextLine();
+    	
     	Plato plato=new Plato(nombre,descripcion);
     	conector.savePlato(plato);
+    }    
+  
+    
+    private static void gestionMenuComida(Scanner sc){
+        int opcion;
+        boolean salir;
+        salir=false;
+        //Imprimimos el menu
+        printMenu(opcionsMenuComida);
+        while(!salir){        	
+            opcion=getOpcion(sc,opcionsMenuComida);
+            MenuComida opcionMenuElemento=MenuComida.valueOf(opcionsMenuComida[opcion-1]);
+            switch(opcionMenuElemento){
+                case Añadir_Nueva_Comida:  
+                	nerrors=0;
+                	afegirPlato();
+                    break;
+                case Consultar_Comida:    
+                	nerrors=0;
+                	conector.listPlato();
+                    break;
+                case Actualizar_Comida:                    
+                	nerrors=0;
+                	System.out.println("Has escogido el tipo de comida");
+                	conector.listPlato();
+                    break;
+                case Eliminar_Comida:
+                	System.out.println("Has escogido el chef");
+                	nerrors=0;
+                	break;
+                default:
+                	System.out.println("Volviendo al menu principal");
+                	salir=true;
+                    break;
+            }
+            if(!salir){
+            	printMenu(opcionsMenuComida);
+            } 
+        }
     }
     
+    private static void afegirComida(){
+    	System.out.println("Nombre de la comida: ");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion: ");
+    	String descripcion=sc.nextLine();
+    	sc.nextLine();
+    	
+    	Comida comida=new Comida(nombre,descripcion);
+    	conector.saveComida(comida);
+    }
     
+    /*INGREDIENTE*/
     private static void gestionMenuIngrediente(Scanner sc){
         int opcion;
         boolean salir;
@@ -362,6 +366,7 @@ public class Visor {
     }
     
     
+    /*FAMILIA ING*/
     private static void gestionMenuFamiliaIng(Scanner sc){
         int opcion;
         boolean salir;
@@ -461,7 +466,6 @@ public class Visor {
     	}catch(InputMismatchException e){
     		System.out.println("Dato introducido incorrecto!");
     	}
-    	
     }
     
     

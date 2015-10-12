@@ -28,7 +28,7 @@ public class ConnectorHB {
     private static Session session = null;
     private static Transaction tx=null;
         
-    public ConnectorHB() { }
+    public ConnectorHB(){ }
     
     public static void conectar(){
     	try {
@@ -53,9 +53,9 @@ public class ConnectorHB {
     		session.close();
     	}
     }
-	
-	    /*SAVE ACTIONS*/
-    
+
+    /*SAVE ACTIONS*/
+
     /*RECETA*/
     public void saveReceta(Receta receta){
     	try{	
@@ -282,6 +282,7 @@ public class ConnectorHB {
     		session.close();
     	}
     }
+    
     
     public void update(){
     	
