@@ -5,9 +5,9 @@ import java.util.Set;
 public class Ingrediente {
 	private int id;
 	private String nombre;
-	private FamiliaIng familia;
 	private boolean refrigeracion;
 	
+	private FamiliaIng familia;
 	private Set<Receta> recetas;
 	
 	public Ingrediente(){

@@ -17,7 +17,9 @@ import Modelo.Ingrediente;
 import Modelo.Plato;
 import Modelo.Receta;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 
@@ -27,8 +29,8 @@ public class ConnectorHB {
     private static SessionFactory sf = null;
     private static Session session = null;
     private static Transaction tx=null;
-    
-    public ConnectorHB(){ }
+
+    public ConnectorHB(){}
     
     public static void conectar(){
     	try {
@@ -54,7 +56,9 @@ public class ConnectorHB {
     	}
     }
     
-    /*SAVE ACTIONS*/
+    
+    /*+++++++++++++++SAVE ACTIONS+++++++++++++++++*/
+    
     
     /*RECETA*/
     public void saveReceta(Receta receta){
@@ -146,7 +150,10 @@ public class ConnectorHB {
     	}
     }
     
-    /*LIST ACTIONS*/
+    
+    
+    /*++++++++++++++++++LIST ACTIONS+++++++++++++++*/
+    
     
     /*RECETA*/    
     public List<Receta> listReceta(){
@@ -295,7 +302,142 @@ public class ConnectorHB {
 		return familias;
     }
     
-    /*DELETE ACTIONS*/
+    
+    /*++++++++++++++++Update ACTIONS+++++++++++++++++++*/
+    
+    public void updateComida(int id,String nombre, String descripcion, Set<Integer> idRecetas){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	Comida comida=(Comida)session.get(Comida.class,id);
+	    	if(comida!=null){
+	    		Set<Receta> recetas=new HashSet<Receta>();
+	    		comida.setNombre(nombre);
+	    		comida.setDescripcion(descripcion);
+	    		for(int idActual:idRecetas){
+	    			Receta receta=(Receta)session.get(Receta.class, idActual);
+	    			if(receta!=null){
+	    				recetas.add(receta);
+	    			}
+	    		}
+	    		comida.setRecetas(recetas);
+	    		tx.commit();
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
+    public void updatePlato(int id,String nombre, String descripcion, Set<Integer> idRecetas){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	Plato plato=(Plato)session.get(Plato.class,id);
+	    	if(plato!=null){
+	    		Set<Receta> recetas=new HashSet<Receta>();
+	    		plato.setNombre(nombre);
+	    		plato.setDescripcion(descripcion);
+	    		for(int idActual:idRecetas){
+	    			Receta receta=(Receta)session.get(Receta.class, idActual);
+	    			if(receta!=null){
+	    				recetas.add(receta);
+	    			}
+	    		}
+	    		plato.setRecetas(recetas);
+	    		tx.commit();
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
+    public void updateChef(int id,String nombre, String apellido, int nEstrellas, Set<Integer> idRecetas){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	Chef chef=(Chef)session.get(Chef.class,id);
+	    	if(chef!=null){
+	    		Set<Receta> recetas=new HashSet<Receta>();
+	    		chef.setNombre(nombre);
+	    		chef.setApellido(apellido);
+	    		chef.setnEstrellas(nEstrellas);
+	    		for(int idActual:idRecetas){
+	    			Receta receta=(Receta)session.get(Receta.class, idActual);
+	    			if(receta!=null){
+	    				recetas.add(receta);
+	    			}
+	    		}
+	    		chef.setRecetas(recetas);
+	    		tx.commit();
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
+    public void updateIngrediente(int id,String nombre, boolean boolRefrigeracion, FamiliaIng familia, Set<Integer> idRecetas){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	if(familia!=null){
+		    	Ingrediente ingrediente=(Ingrediente)session.get(Ingrediente.class,id);
+		    	if(ingrediente!=null){
+		    		Set<Receta> recetas=new HashSet<Receta>();
+		    		ingrediente.setNombre(nombre);
+		    		ingrediente.setRefrigeracion(boolRefrigeracion);
+		    		ingrediente.setFamilia(familia);
+		    		for(int idActual:idRecetas){
+		    			Receta receta=(Receta)session.get(Receta.class, idActual);
+		    			if(receta!=null){
+		    				recetas.add(receta);
+		    			}
+		    		}
+		    		ingrediente.setRecetas(recetas);
+		    		tx.commit();
+		    	}
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
+    public void updateFamiliaIng(int id,String nombre, String descripcion, Set<Integer> idIngredientes){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	FamiliaIng familia=(FamiliaIng)session.get(FamiliaIng.class,id);
+	    	if(familia!=null){
+	    		Set<Ingrediente> ingredientes=new HashSet<Ingrediente>();
+	    		familia.setNombre(nombre);
+	    		familia.setDescripcion(descripcion);
+	    		for(int idActual:idIngredientes){
+	    			Ingrediente ingrediente=(Ingrediente)session.get(Ingrediente.class, idActual);
+	    			if(ingrediente!=null){
+	    				ingredientes.add(ingrediente);
+	    			}
+	    		}
+	    		familia.setIngredientes(ingredientes);
+	    		tx.commit();
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
+    /*++++++++++++++++DELETE ACTIONS+++++++++++++++++++*/
+    
+    
+    
     /*RECETA*/
 	public void deleteReceta(Receta receta) {
     	try{
@@ -379,11 +521,7 @@ public class ConnectorHB {
     		session.close();
     	}
 	}
-	
-    public void update(){
-        
-    }
-    
+	    
     public FamiliaIng getFamiliaIng(int idFamilia){
         FamiliaIng familia=null;
         try{

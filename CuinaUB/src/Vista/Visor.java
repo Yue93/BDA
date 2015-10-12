@@ -1,9 +1,11 @@
 package Vista;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -134,7 +136,13 @@ public class Visor {
         }
     }
     
-    /*RECETA*/
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //--------------------------Receta-----------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
     
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir una receta,
@@ -161,9 +169,9 @@ public class Visor {
                 	conector.listReceta();
                     break;
                 case Actualizar_Receta:                    
-                	System.out.println("Has escogido actualizar receta");
                 	nerrors=0;
-                    break;
+                    updateReceta();
+                	break;
                 case Eliminar_Receta:
                 	nerrors=0;
                 	deleteReceta();
@@ -205,6 +213,36 @@ public class Visor {
         }
     }
 	
+    private static void updateReceta(){
+    	try{
+	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	conector.listPlato();
+	    	System.out.println("Entra el plato que quieres actualizar(ID):");
+	    	int id=sc.nextInt();
+	    	System.out.println("Nombre del plato: ");
+	    	String nombre=sc.next();
+	    	System.out.println("Descripcion: ");
+	    	sc.nextLine();
+	    	String descripcion=sc.nextLine();
+	    	if(conector.listReceta()!=null){
+		    	while(actualizar){
+		    		System.out.println("Escoge la receta(-1 para terminar)");
+		    		int idReceta=sc.nextInt();
+		    		if(idReceta!=-1){
+		    			idRecetas.add(idReceta);
+		    		}else{
+		    			actualizar=false;
+		    		}
+		    	}
+	    	}
+	    	conector.updatePlato(id,nombre,descripcion,idRecetas);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    	
+    }
+    
     /**
      * Método para eliminar una receta
      * @param no le pasamos parametros
@@ -221,7 +259,14 @@ public class Visor {
     	}
     }
     
-    /*PLATO*/
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //--------------------------Plato-----------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir un plato,
      * consultar la información de un plato ya existente, actualizar la info de un plato
@@ -247,8 +292,8 @@ public class Visor {
                 	conector.listPlato();
                     break;
                 case Actualizar_Plato:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	updatePlato();
                     break;
                 case Eliminar_Plato:
                 	nerrors=0;
@@ -280,6 +325,36 @@ public class Visor {
     	conector.savePlato(plato);
     }
     
+    private static void updatePlato(){
+    	try{
+	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	conector.listPlato();
+	    	System.out.println("Entra el plato que quieres actualizar(ID):");
+	    	int id=sc.nextInt();
+	    	System.out.println("Nombre del plato: ");
+	    	String nombre=sc.next();
+	    	System.out.println("Descripcion: ");
+	    	sc.nextLine();
+	    	String descripcion=sc.nextLine();
+	    	if(conector.listReceta()!=null){
+		    	while(actualizar){
+		    		System.out.println("Escoge la receta(-1 para terminar)");
+		    		int idReceta=sc.nextInt();
+		    		if(idReceta!=-1){
+		    			idRecetas.add(idReceta);
+		    		}else{
+		    			actualizar=false;
+		    		}
+		    	}
+	    	}
+	    	conector.updatePlato(id,nombre,descripcion,idRecetas);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    	
+    }
+    
     /**
      * Método para eliminar un plato
      * @param no le pasamos parametros
@@ -296,7 +371,14 @@ public class Visor {
     	}
     }
     
-    /*COMIDA*/
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //--------------------------Comida-----------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir una comida,
      * consultar la información de una comida ya existente, actualizar la info de una comida
@@ -322,8 +404,8 @@ public class Visor {
                 	conector.listComida();
                     break;
                 case Actualizar_Comida:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	updateComida();
                     break;
                 case Eliminar_Comida:
                 	nerrors=0;
@@ -348,12 +430,44 @@ public class Visor {
     	System.out.println("Nombre de la comida: ");
     	String nombre=sc.next();
     	System.out.println("Descripcion: ");
-    	String descripcion=sc.nextLine();
     	sc.nextLine();
+    	String descripcion=sc.nextLine();
+    	
     	
     	Comida comida=new Comida(nombre,descripcion);
     	conector.saveComida(comida);
     } 
+    
+    private static void updateComida(){
+    	try{
+	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	conector.listComida();
+	    	System.out.println("Entra la comida que quieres actualizar(ID):");
+	    	int id=sc.nextInt();
+	    	System.out.println("Nombre de la comida: ");
+	    	String nombre=sc.next();
+	    	System.out.println("Descripcion: ");
+	    	sc.nextLine();
+	    	String descripcion=sc.nextLine();
+	    	//List<Receta> recetas=conector.listReceta();
+	    	if(conector.listReceta()!=null){
+		    	while(actualizar){
+		    		System.out.println("Escoge la receta(-1 para terminar)");
+		    		int idReceta=sc.nextInt();
+		    		if(idReceta!=-1){
+		    			idRecetas.add(idReceta);
+		    		}else{
+		    			actualizar=false;
+		    		}
+		    	}
+	    	}
+	    	conector.updateComida(id,nombre,descripcion,idRecetas);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    	
+    }
     
     /**
      * Método para eliminar una comida
@@ -371,7 +485,16 @@ public class Visor {
     	}
     }
     
-    /*INGREDIENTE*/
+    
+    
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //-----------------------Ingrediente---------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir un ingrediente,
      * consultar la información de un ingrediente ya existente, actualizar la info de un ingrediente
@@ -398,8 +521,8 @@ public class Visor {
                 	nerrors=0;
                     break;
                 case Actualizar_Ingrediente:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	updateIngrediente();
                     break;
                 case Eliminar_Ingrediente:
                 	nerrors=0;
@@ -443,6 +566,48 @@ public class Visor {
         }
     }
     
+    private static void updateIngrediente(){
+    	try{
+	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	boolean boolRefrigeracion=false;
+	    	FamiliaIng familia=null;
+	    	if(conector.listFamiliaIng()!=null && conector.listFamiliaIng().size()>0){
+	    		System.out.println("Seleccion el ingrediente que quieres actualizar(ID):");
+		    	int id=sc.nextInt();
+		    	System.out.println("Nombre del ingrediente:");
+	            sc.nextLine();
+	            String nombre=sc.nextLine();    
+	            System.out.println("Refrigeracion? Yes(y)/No(n)");
+	            String refrigeracion=sc.next();
+	            if(refrigeracion.toLowerCase().equals("y")){
+	                boolRefrigeracion=true;
+	            }
+	        	System.out.println("Id de la familia a la que pertenece?");
+	            int idFamilia=sc.nextInt();
+	            familia=conector.getFamiliaIng(idFamilia);
+	            
+		    	if(conector.listIngredientes()!=null){
+			    	while(actualizar){
+			    		System.out.println("Escoge la receta(-1 para terminar)");
+			    		int idReceta=sc.nextInt();
+			    		if(idReceta!=-1){
+			    			idRecetas.add(idReceta);
+			    		}else{
+			    			actualizar=false;
+			    		}
+			    	}
+		    	}
+		    	conector.updateIngrediente(id,nombre,boolRefrigeracion,familia,idRecetas);
+	    	}else{
+	    		System.out.println("No hay ");
+	    	}
+	    	
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    }
+    
     /**
      * Método para eliminar un ingrediente
      * @param no le pasamos parametros
@@ -461,7 +626,13 @@ public class Visor {
     	}
     }
     
-    /*FAMILIA ING*/
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //------------------Familia Ingrediente------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir una familia de ingredientes,
      * consultar la información de una familia de ingredientes ya existente, actualizar la info de una familia de ingredientes
@@ -487,8 +658,8 @@ public class Visor {
                     conector.listFamiliaIng();
                 	break;
                 case Actualizar_Familia_Ingrediente:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	updateFamiliaIng();
                     break;
                 case Eliminar_Familia_Ingrediente:
                 	nerrors=0;
@@ -520,6 +691,35 @@ public class Visor {
     	conector.saveFamiliaIng(familiaing);
     }
     
+    private static void updateFamiliaIng(){
+    	try{
+	    	Set<Integer> idIngredientes=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	conector.listFamiliaIng();
+	    	System.out.println("Seleccion la familia de ingrediente que quieres actualizar(ID):");
+	    	int id=sc.nextInt();
+	    	System.out.println("Nombre de la familia: ");
+	    	String nombre=sc.next();
+	    	System.out.println("Descripcion de la familia: ");
+	    	sc.nextLine();
+	    	String descripcion=sc.nextLine();
+	    	if(conector.listIngredientes()!=null){
+		    	while(actualizar){
+		    		System.out.println("Escoge la receta(-1 para terminar)");
+		    		int idIngrediente=sc.nextInt();
+		    		if(idIngrediente!=-1){
+		    			idIngredientes.add(idIngrediente);
+		    		}else{
+		    			actualizar=false;
+		    		}
+		    	}
+	    	}
+	    	conector.updateFamiliaIng(id,nombre,descripcion,idIngredientes);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    }
+    
     /**
      * Método para eliminar una familia de ingredientes
      * @param no le pasamos parametros
@@ -538,7 +738,13 @@ public class Visor {
     	}
     }
     
-    /*CHEF*/
+    
+    
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //--------------------------Chef-------------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
     /**
      * Método de gestion del menú de la aplicación. Donde el usuario debe escoger si quiere añadir un chef,
      * consultar la información de un chef ya existente, actualizar la info de un chef
@@ -564,8 +770,8 @@ public class Visor {
                 	conector.listChef();
                     break;
                 case Actualizar_Chef:                    
-                	System.out.println("Has escogido el tipo de comida");
                 	nerrors=0;
+                	updateChef();
                     break;
                 case Eliminar_Chef:
                 	nerrors=0;
@@ -601,6 +807,37 @@ public class Visor {
         }
     }
 
+    private static void updateChef(){
+    	try{
+	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	boolean actualizar=true;
+	    	conector.listChef();
+	    	System.out.println("Seleccion el chef que quieres actualizar(ID):");
+	    	int id=sc.nextInt();
+	    	System.out.println("Nombre del chef: ");
+	    	String nombre=sc.next();
+	    	System.out.println("Apellido del chef: ");
+	    	String apellido=sc.next();
+	    	System.out.println("Numero de estrellas Michelin: ");
+	    	int nEstrellas=sc.nextInt();
+	    	if(conector.listReceta()!=null){
+		    	while(actualizar){
+		    		System.out.println("Escoge la receta(-1 para terminar)");
+		    		int idReceta=sc.nextInt();
+		    		if(idReceta!=-1){
+		    			idRecetas.add(idReceta);
+		    		}else{
+		    			actualizar=false;
+		    		}
+		    	}
+	    	}
+	    	conector.updateChef(id,nombre,apellido,nEstrellas,idRecetas);
+    	}catch(InputMismatchException ime){
+    		System.out.println("Entrada incorrecta!");
+    	}
+    	
+    }
+    
     /**
      * Método para eliminar a un chef
      * @param no le pasamos parametros
@@ -618,6 +855,10 @@ public class Visor {
         	conector.deleteChef(chef);
     	}
     }
+    
+    
+    
+    
     
 	/**
      * Método donde pedimos la entrada por el teclado la opcion que quiere escoger el 
