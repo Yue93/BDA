@@ -26,9 +26,9 @@ public class Ingrediente {
 		this.familia=familia;
 		this.refrigeracion=refrigeracion;
 	}
-	
+
 	public int getId(){
-		return this.id;
+		return id;
 	}
 	
 	public void setId(int id){

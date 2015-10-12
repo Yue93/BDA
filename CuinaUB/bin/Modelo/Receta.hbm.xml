@@ -8,7 +8,7 @@
             <generator class="identity" />
         </id>
         
-        <property name="nombre" column="NOMBRE" type="java.lang.String" unique="true"/>
+        <property name="nombre" column="NOMBRE" type="java.lang.String"/>
         <property name="elaboracion" column="ELABORACION" type="java.lang.String"/>
         <property name="dificultad" column="DIFICULTAD" type="int"/>
         <property name="tiempo" column="TIEMPO" type="int"/>

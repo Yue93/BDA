@@ -8,7 +8,7 @@
             <generator class="assigned" />
         </id>
         
-        <property name="nombre" column="NOMBRE" type="java.lang.String" unique="true"/>
+        <property name="nombre" column="NOMBRE" type="java.lang.String"/>
         <property name="descripcion" column="DESCRIPCION" type="java.lang.String"/>
 
         <set name="ingredientes" table="INGREDIENTE" inverse="false" lazy="true" cascade="all">

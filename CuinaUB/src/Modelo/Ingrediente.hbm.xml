@@ -8,7 +8,7 @@
             <generator class="identity" />
         </id>
         
-        <property name="nombre" column="NOMBRE" type="java.lang.String" unique="true"/>
+        <property name="nombre" column="NOMBRE"/>
         <property name="refrigeracion" column="REFRIGERACION" type="boolean"/>
         
         <many-to-one name="familia" class="Modelo.FamiliaIng" fetch="join">

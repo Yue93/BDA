@@ -9,7 +9,7 @@
         </id>
         
         <property name="nombre" column="NOMBRE" type="java.lang.String"/>
-        <property name="apellido" column="APELLIDO" type="java.lang.String"/>
+        <property name="apellido" column="APELLIDO"/>
         <property name="nEstrellas" column="NESTRELLAS" type="int" access="field"/>
         <set name="recetas" table="RECETA" inverse="false" lazy="true" cascade="all">
             <key>

@@ -5,13 +5,13 @@ public class Usuario{
 	private String nombre;
 	private String password;
 	
-	public Usuario(int id,String nombre, String password){
-		this.id=id;
+	public Usuario(String nombre, String password){
 		this.nombre=nombre;
 		this.password=password;
 	}
 	
-	public Usuario(String nombre, String password){
+	public Usuario(int id, String nombre, String password){
+		this.id=id;
 		this.nombre=nombre;
 		this.password=password;
 	}
