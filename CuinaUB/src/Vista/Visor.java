@@ -1,6 +1,7 @@
 package Vista;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -67,7 +68,9 @@ public class Visor {
 			conector=new ConnectorHB();
 			conector.conectar();
 			gestionMenuPrincipal();
-		}	
+		}else{
+            System.out.println("Usuario o contraseña incorrecto!");
+        }
 	}
 	
 	
@@ -181,17 +184,25 @@ public class Visor {
      * @param no le pasamos parametros
      * @return no retornamos nada*/
     private static void afegirReceta(){
-    	System.out.println("Nombre de la receta:");
-    	String nombre=sc.next();
-    	System.out.println("Descripcion de la elaboracion:");
-    	String elaboracion=sc.nextLine();
-    	sc.nextLine();
-    	System.out.println("Dificultat de la elaboracion(1 a 10):");
-    	int dificultat=sc.nextInt();
-    	System.out.println("Tiempo de eleboracion (en minutos):");
-    	int tiempo=sc.nextInt();
-    	Receta receta=new Receta(nombre," ",dificultat,tiempo);
-    	conector.saveReceta(receta);
+    	try{
+            System.out.println("Nombre de la receta: ");
+            sc.nextLine();
+            String nombre=sc.nextLine();
+            System.out.println("Tiempo de eleboracion(en minutos): ");
+            int tiempo=sc.nextInt();
+            System.out.println("Descripcion de la elaboracion: ");
+            sc.nextLine();
+            String elaboracion=sc.nextLine();
+            System.out.println("Dificultat de la elaboracion(1 a 10): ");
+            int dificultat=sc.nextInt();
+            
+            Receta receta=new Receta(nombre,elaboracion,dificultat,tiempo);
+            conector.saveReceta(receta);
+        }catch(NumberFormatException e ){
+            System.out.println("Formato incorrecto!");
+        }catch(InputMismatchException ime){
+            System.out.println("Dato introducido incorrecto!");
+        }
     }
 	
     /**
@@ -240,7 +251,6 @@ public class Visor {
                 	nerrors=0;
                     break;
                 case Eliminar_Plato:
-                	System.out.println("Has escogido el chef");
                 	nerrors=0;
                 	deletePlato();
                 	break;
@@ -411,19 +421,26 @@ public class Visor {
      * @param no le pasamos parametros
      * @return no retornamos nada*/
     private static void afegirIngrediente(){
-    	System.out.println("Nombre del ingrediente: ");
-    	String nombre=sc.next();
-    	System.out.println("Familia a la que pertenece el ingrediente: ");
-    	FamiliaIng familia=new FamiliaIng();
-    	sc.nextLine();
-    	sc.nextLine();
-    	System.out.println("Necesita refrigeracion? ");
-    	boolean refrigeracion=sc.hasNextBoolean();
-    	sc.nextLine();
-    	
-    	
-    	Ingrediente ingrediente=new Ingrediente(nombre,familia,refrigeracion);
-    	conector.saveIngrediente(ingrediente);
+    	try{
+            boolean boolRefrigeracion=false;
+            FamiliaIng familia=null;
+            System.out.println("Nombre del ingrediente:");
+            sc.nextLine();
+            String nombre=sc.nextLine();    
+            System.out.println("Refrigeracion? Yes(y)/No(n)");
+            String refrigeracion=sc.next();
+            if(refrigeracion.toLowerCase().equals("y")){
+                boolRefrigeracion=true;
+            }
+            conector.listFamiliaIng();
+            System.out.println("Id de la familia a la que pertenece?");
+            int idFamilia=sc.nextInt();
+            familia=conector.getFamiliaIng(idFamilia);
+            Ingrediente ingrediente=new Ingrediente(nombre,familia,boolRefrigeracion);
+            conector.saveIngrediente(ingrediente);
+        }catch(InputMismatchException ime){
+            System.out.println("Tipo de datos incorrecto!");
+        }
     }
     
     /**
@@ -570,16 +587,18 @@ public class Visor {
      * @param no le pasamos parametros
      * @return no retornamos nada*/
     private static void afegirChef(){
-    	System.out.println("Nombre del Chef: ");
-    	String nombre=sc.next();
-    	System.out.println("Apellido del Chef: ");
-    	String apellido=sc.nextLine();
-    	sc.nextLine();
-    	System.out.println("Numero de estrellas Michellen: ");
-    	int nEstrellas=sc.nextInt();
-    	
-    	Chef chef=new Chef(nombre,apellido,nEstrellas);
-    	conector.saveChef(chef);
+    	try{
+            System.out.println("Nombre del chef:");
+            String nombre=sc.next();
+            System.out.println("Apellido del chef:");
+            String apellido=sc.next();
+            System.out.println("Numero de estrella michelin:");
+            int nEstrella=sc.nextInt();
+            Chef chef=new Chef(nombre,apellido,nEstrella);
+            conector.saveChef(chef);
+        }catch(InputMismatchException e){
+            System.out.println("Dato introducido incorrecto!");
+        }
     }
 
     /**

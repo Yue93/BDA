@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.exception.GenericJDBCException;
 
 import Modelo.Chef;
 import Modelo.Comida;
@@ -21,19 +22,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 @SuppressWarnings("deprecation")
-public class ConnectorHB {
-	private List<Chef> chefs;
-	private List<Comida> comidas;
-	private List<Ingrediente> ingredientes;
-	private List<Plato> platos;
-	protected List<Receta> recetas;
-	private List<FamiliaIng> familia;
-	
+public class ConnectorHB {	
+    
     private static SessionFactory sf = null;
     private static Session session = null;
     private static Transaction tx=null;
     
-        
     public ConnectorHB(){ }
     
     public static void conectar(){
@@ -70,6 +64,7 @@ public class ConnectorHB {
     		session.save(receta);
     		tx.commit();
     	}catch(HibernateException e){
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -84,6 +79,7 @@ public class ConnectorHB {
     		session.save(plato);
     		tx.commit();
     	}catch(HibernateException e){
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -98,7 +94,8 @@ public class ConnectorHB {
     		session.save(comida);
     		tx.commit();
     	}catch(HibernateException e){
-    		e.printStackTrace();
+    		if (tx!=null) tx.rollback();
+            e.printStackTrace();
     	}finally{
     		session.close();
     	}
@@ -112,6 +109,7 @@ public class ConnectorHB {
     		session.save(ingrediente);
     		tx.commit();
     	}catch(HibernateException e){
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -126,6 +124,7 @@ public class ConnectorHB {
     		session.save(familiaing);
     		tx.commit();
     	}catch(HibernateException e){
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -140,6 +139,7 @@ public class ConnectorHB {
     		session.save(chef);
     		tx.commit();
     	}catch(HibernateException e){
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -150,15 +150,27 @@ public class ConnectorHB {
     
     /*RECETA*/    
     public List<Receta> listReceta(){
+    	List<Receta> recetas = null;
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
     		recetas = session.createSQLQuery("Select * FROM Receta").addEntity(Receta.class).list();
-    		for(Receta receta:recetas){
-    			System.out.println("Id receta: "+receta.getId()+" --- "+"Nombre: "+receta.getNombre());
-    		}
+    		if(recetas==null){
+                System.out.println("No hay recetas! Se buena persona y añade algunas!");
+            }else{
+                System.out.println("--------------------------------");
+                System.out.println("        Lista de recetas        ");
+                System.out.println("--------------------------------");
+                for(Receta receta:recetas){
+                    System.out.println("Id receta: "+receta.getId()+" --- "+"Nombre: "+receta.getNombre());
+                    System.out.println("Description: "+receta.getElaboracion());
+                    System.out.println("Dificultad: "+receta.getDificultad());
+                    System.out.println("Tiempo: "+receta.getTiempo());
+                }
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -168,15 +180,20 @@ public class ConnectorHB {
     
     /*PLATO*/
     public List<Plato> listPlato(){
+    	List<Plato> platos=null;
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		List<Plato> platos=session.createSQLQuery("Select * FROM Plato").addEntity(Plato.class).list();
-    		for(Plato plato:platos){
-    			System.out.println("Id plato: "+plato.getId()+" ---- "+"Nombre: "+plato.getNombre());
-    		}
+    		platos=session.createSQLQuery("Select * FROM Plato").addEntity(Plato.class).list();
+    		System.out.println("--------------------------------");
+            System.out.println("        Lista de platos     ");
+            System.out.println("--------------------------------");
+            for(Plato plato:platos){
+                System.out.println("Id plato: "+plato.getId()+" ---- "+"Nombre: "+plato.getNombre());
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -186,16 +203,21 @@ public class ConnectorHB {
     
     /*COMIDA*/
     public List<Comida> listComida(){
-    	List<Comida> comidas = null;
+    	List<Comida> comidas=null;
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
     		comidas=session.createSQLQuery("Select * FROM Comida").addEntity(Comida.class).list();
-    		for(Comida comida: comidas){
-    			System.out.println("Nombre: "+comida.getNombre());
-    		}
+    		System.out.println("--------------------------------");
+            System.out.println("        Lista de comidas        ");
+            System.out.println("--------------------------------");
+            for(Comida comida: comidas){
+                System.out.println("Id: "+comida.getId()+"\nNombre: "+comida.getNombre());
+                System.out.println("Descripcion: "+comida.getDescripcion());
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -205,15 +227,20 @@ public class ConnectorHB {
     
     /*CHEF*/
     public List<Chef> listChef(){
+    	List<Chef> chefs=null;
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		List<Chef> chefs=session.createSQLQuery("Select * FROM Chef").addEntity(Chef.class).list();
-    		for(Chef chef:chefs){
-    			System.out.println("Nombre: "+chef.getNombre());
-    		}
+    		chefs=session.createSQLQuery("Select * FROM Chef").addEntity(Chef.class).list();
+    		System.out.println("--------------------------------");
+            System.out.println("        Lista de chefs      ");
+            System.out.println("--------------------------------");
+            for(Chef chef:chefs){
+                System.out.println("Nombre: "+chef.getNombre());
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -223,15 +250,20 @@ public class ConnectorHB {
     
     /*INGREDIENTES*/
     public List<Ingrediente> listIngredientes(){
+    	List<Ingrediente> ingredientes=null;
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		List<Ingrediente> ingredientes=session.createSQLQuery("Select * FROM Ingrediente").addEntity(Ingrediente.class).list();
-    		for(Ingrediente ingrediente: ingredientes){
-    			System.out.println("Id Ingrediente: "+ingrediente.getId()+" --- "+"Nombre: "+ingrediente.getNombre());
-    		}
+    		ingredientes=session.createSQLQuery("Select * FROM Ingrediente").addEntity(Ingrediente.class).list();
+    		System.out.println("------------------------------------");
+            System.out.println("        Lista de ingredientess      ");
+            System.out.println("------------------------------------");
+            for(Ingrediente ingrediente: ingredientes){
+                System.out.println("Id Ingrediente: "+ingrediente.getId()+" --- "+"Nombre: "+ingrediente.getNombre());
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -246,11 +278,15 @@ public class ConnectorHB {
     		session=sf.openSession();
     		tx=session.beginTransaction();
     		familias=session.createSQLQuery("Select * FROM FamiliaIng").addEntity(FamiliaIng.class).list();
-    		for(FamiliaIng familia: familias){
-    			System.out.println("Nombre: "+familia.getNombre());
-    		}
+    		System.out.println("--------------------------------");
+            System.out.println("        Lista de familias       ");
+            System.out.println("--------------------------------");
+            for(FamiliaIng familia: familias){
+                System.out.println("ID: "+familia.getId()+" Nombre: "+familia.getNombre());
+            }
     		tx.commit();
     	}catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
     		e.printStackTrace();
     	}finally{
     		session.close();
@@ -344,24 +380,23 @@ public class ConnectorHB {
     	}
 	}
 	
-    /**********************/
-    public void add(){
-    	
-    }
-    
-    public void read(){
-    	
-    }
-    
     public void update(){
-    	
+        
     }
     
-    public void delete(){
-    	
-    }
-    
-    public void readReceta(){
-    	
+    public FamiliaIng getFamiliaIng(int idFamilia){
+        FamiliaIng familia=null;
+        try{
+            session=sf.openSession();
+            tx=session.beginTransaction();
+            familia=(FamiliaIng) session.get(FamiliaIng.class, idFamilia);
+            tx.commit();
+        }catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return familia;
     }
 }
