@@ -9,6 +9,15 @@ public class FamiliaIng {
 	
 	private Set<Ingrediente> ingredientes;
 	
+	public FamiliaIng(){
+		
+	}
+	
+	public FamiliaIng(String nombre, String descripcion){
+		this.nombre=nombre;
+		this.descripcion=descripcion;
+	}
+	
 	public FamiliaIng(int id, String nombre, String descripcion){
 		this.id=id;
 		this.nombre=nombre;

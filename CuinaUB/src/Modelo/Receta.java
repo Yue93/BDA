@@ -15,8 +15,19 @@ public class Receta {
 	private Chef chef;
 	private Set<Ingrediente> ingredientes;
 	
+	public Receta(){
+		
+	}
+	
 	public Receta(int id,String nombre, String elaboracion,int dificultad, int tiempo){
 		this.id=id;
+		this.nombre=nombre;
+		this.elaboracion=elaboracion;
+		this.dificultad=dificultad;
+		this.tiempo=tiempo;
+	}
+	
+	public Receta(String nombre, String elaboracion,int dificultad, int tiempo){
 		this.nombre=nombre;
 		this.elaboracion=elaboracion;
 		this.dificultad=dificultad;

@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.type.StringType;
 
 import Controlador.ConnectorHB;
+import Modelo.Receta;
 //import Modelo.Usuario;
 import Modelo.Usuario;
 
@@ -46,7 +47,7 @@ public class Visor {
 	
 	private static Usuario user;
 	
-	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args){
 		nerrors=0;
 		sc=new Scanner(System.in);
@@ -57,8 +58,9 @@ public class Visor {
 			System.out.println("===========================================");
 			System.out.println("                 Welcome                   ");
 			System.out.println("===========================================");
-			user=new Usuario(usuario,contrasenya);
+			//user=new Usuario(usuario,contrasenya);
 			conector=new ConnectorHB();
+			conector.conectar();
 			gestionMenuPrincipal();
 		}	
 	}
@@ -114,6 +116,7 @@ public class Visor {
 	            	break;
 	            default:
 	            	System.out.println("Programa Finalizado");
+	            	//conector.close();
 	            	finalizar=true;
 	                break;
 	        }
@@ -140,12 +143,12 @@ public class Visor {
             MenuReceta opcionMenuElemento=MenuReceta.valueOf(opcionsMenuReceta[opcion-1]);
             switch(opcionMenuElemento){
                 case Añadir_Nueva_Receta:  
-                	System.out.println("Has escogido la receta");
                 	nerrors=0;
+                	afegirReceta();
                     break;
-                case Consultar_Receta:                   
-                	System.out.println("Has escogido el tipo de plato");
+                case Consultar_Receta:   
                 	nerrors=0;
+                	conector.listReceta();
                     break;
                 case Actualizar_Receta:                    
                 	System.out.println("Has escogido el tipo de comida");
@@ -166,6 +169,19 @@ public class Visor {
         }
     }
 
+    private static void afegirReceta(){
+    	System.out.println("Nombre de la receta?");
+    	String nombre=sc.next();
+    	System.out.println("Descripcion de la elaboracion?");
+    	String elaboracion=sc.nextLine();
+    	sc.nextLine();
+    	System.out.println("Dificultat de la elaboracion(1 a 10)?");
+    	int dificultat=sc.nextInt();
+    	System.out.println("Tiempo de eleboracion(en segundo)?");
+    	int tiempo=sc.nextInt();
+    	Receta receta=new Receta(nombre," ",dificultat,tiempo);
+    	conector.saveReceta(receta);
+    }
 	
     private static void gestionMenuComida(Scanner sc){
         int opcion;
@@ -260,6 +276,7 @@ public class Visor {
                     break;
                 case Consultar_Ingrediente:                   
                 	System.out.println("Has escogido el tipo de plato");
+                	conector.listIngredientes();
                 	nerrors=0;
                     break;
                 case Actualizar_Ingrediente:                    

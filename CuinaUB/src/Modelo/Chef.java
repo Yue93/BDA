@@ -9,6 +9,10 @@ public class Chef {
 	
 	private Set<Receta> recetas;
 	
+	public Chef(){
+		
+	}
+	
 	public Chef(String nombre,String apellido,int nEstrellas){
 		this.nombre=nombre;
 		this.apellido=apellido;

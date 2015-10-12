@@ -9,6 +9,15 @@ public class Comida {
 	
 	private Set<Receta> recetas;
 	
+	public Comida(){
+		
+	}
+	
+	public Comida(String nombre, String descripcion){
+		this.nombre=nombre;
+		this.descripcion=descripcion;
+	}
+
 	
 	public Comida(int id, String nombre, String descripcion){
 		this.id=id;

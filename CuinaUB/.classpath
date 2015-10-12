@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/jboss-logging-3.1.0.CR2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/jboss-transaction-api_1.1_spec-1.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/lib/hibernate/postgresql-9.4-1203.jdbc41.jar"/>
+	<classpathentry kind="lib" path="C:/Users/SIR/Desktop/UNIVERSIDAD DE BARCELONA/Curso 15-16/Base de dades avanzada/Practica/Practica1/CuinaUB/BDA/hibernate/sqlite-jdbc-3.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

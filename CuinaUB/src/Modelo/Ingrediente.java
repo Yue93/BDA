@@ -9,6 +9,10 @@ public class Ingrediente {
 	
 	private Set<Receta> recetas;
 	
+	public Ingrediente(){
+		
+	}
+	
 	public Ingrediente(String nombre,FamiliaIng familia,boolean refrigeracion){
 		this.nombre=nombre;
 		this.familia=familia;

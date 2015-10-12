@@ -4,11 +4,19 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.url">jdbc:postgresql:cuinaub.db</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLiteDialect</property>
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:cuinaUB.db</property>
         
+               
+        <property name="connection_pool_size">1</property>
         
+        <property name="current_session_context_class">thread</property>
+
+        <property name="hbm2ddl.auto">create-drop</property>
+
+        <property name="show_sql">false</property>
+		<property name="format_sql">true</property>
         
         <mapping resource="Modelo/Chef.hbm.xml"/>
         <mapping resource="Modelo/Comida.hbm.xml"/>

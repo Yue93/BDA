@@ -9,8 +9,18 @@ public class Plato {
 	
 	private Set<Receta> recetas;
 	
+	public Plato(){
+		
+	}
+	
 	public Plato(int id, String nombre, String descripcion){
 		this.id=id;
+		this.nombre=nombre;
+		this.descripcion=descripcion;
+	}
+	
+	
+	public Plato(String nombre, String descripcion){
 		this.nombre=nombre;
 		this.descripcion=descripcion;
 	}
