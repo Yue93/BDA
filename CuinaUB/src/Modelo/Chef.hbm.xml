@@ -4,7 +4,7 @@
 <!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Chef" table="CHEF">
-        <id name="id" column="ID" type="int">
+        <id name="id" column="CHEF_ID" type="int">
             <generator class="identity" />
         </id>
         
@@ -13,7 +13,7 @@
         <property name="nEstrellas" column="NESTRELLAS" type="int" access="field"/>
         <set name="recetas" table="RECETA" inverse="false" lazy="true" cascade="all">
             <key>
-                <column name="ID" />
+                <column name="CHEF_ID" />
             </key>
             <one-to-many class="Modelo.Receta" />
         </set>

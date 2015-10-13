@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="Modelo.Plato" table="PLATO">
-        <id name="id" column="ID" type="int">
+        <id name="id" column="PLATO_ID" type="int">
             <generator class="identity" />
         </id>
         
@@ -13,7 +13,7 @@
 
         <set name="recetas" table="RECETA" inverse="false" lazy="true" cascade="all">
             <key>
-                <column name="ID" />
+                <column name="PLATO_ID" />
             </key>
             <one-to-many class="Modelo.Receta" />
         </set>

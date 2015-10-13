@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="Modelo.FamiliaIng" table="FAMILIAING">
-        <id name="id" column="ID" type="int">
+        <id name="id" column="FAMILIA_ID" type="int">
             <generator class="identity" />
         </id>
         
@@ -13,7 +13,7 @@
 
         <set name="ingredientes" table="INGREDIENTE" inverse="false" lazy="true" cascade="all">
             <key>
-                <column name="ID" />
+                <column name="FAMILIA_ID" />
             </key>
             <one-to-many class="Modelo.Ingrediente" />
         </set>

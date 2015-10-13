@@ -4,7 +4,7 @@
 
 <hibernate-mapping>
     <class name="Modelo.Receta" table="RECETA">
-        <id name="id" column="ID" type="int">
+        <id name="id" column="RECETA_ID" type="int">
             <generator class="identity" />
         </id>
         
@@ -24,8 +24,8 @@
         </many-to-one>
         
         <set name="ingredientes" table="RECETA_INGREDIENTE" cascade="all">
-            <key column="IDRECETA" />
-            <many-to-many column="IDINGREIDENTE" class="Modelo.Ingrediente" />
+            <key column="RECETA_ID" />
+            <many-to-many column="INGREDIENTE_ID" class="Modelo.Ingrediente" />
         </set>
     </class>
 </hibernate-mapping>

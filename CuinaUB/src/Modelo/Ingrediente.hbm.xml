@@ -4,7 +4,7 @@
 <!-- Generated 10-oct-2015 1:40:02 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="Modelo.Ingrediente" table="INGREDIENTE">
-        <id name="id" column="ID" type="int">
+        <id name="id" column="INGREDIENTE_ID" type="int">
             <generator class="identity" />
         </id>
         
@@ -16,8 +16,8 @@
         </many-to-one>
 
         <set name="recetas" table="RECETA_INGREDIENTE" cascade="all">
-            <key column="IDINGREDIENTE" />
-            <many-to-many column="IDRECETA" class="Modelo.Receta" />
+            <key column="INGREDIENTE_ID" />
+            <many-to-many column="RECETA_ID" class="Modelo.Receta" />
         </set>
     </class>
 </hibernate-mapping>
