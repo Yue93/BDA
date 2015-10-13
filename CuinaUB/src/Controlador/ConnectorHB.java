@@ -500,12 +500,15 @@ public class ConnectorHB {
     
     
     /*RECETA*/
-	public void deleteReceta(Receta receta) {
+	public void deleteReceta(int idReceta) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(receta);
-    		tx.commit();
+    		Receta receta=(Receta) session.get(Receta.class, idReceta);
+    		if(receta!=null){
+    			session.delete(receta);
+    		}
+			tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();
     	}finally{
@@ -514,11 +517,14 @@ public class ConnectorHB {
 	}
 	
 	/*PLATO*/
-	public void deletePlato(Plato plato) {
+	public void deletePlato(int idPlato) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(plato);
+    		Plato plato=(Plato) session.get(Plato.class,idPlato);
+    		if(plato!=null){
+    			session.delete(plato);
+    		}
     		tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();
@@ -528,11 +534,14 @@ public class ConnectorHB {
 	}
 	
 	/*COMIDA*/
-	public void deleteComida(Comida comida) {
+	public void deleteComida(int idComida) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(comida);
+    		Comida comida=(Comida)session.get(Comida.class, idComida);
+    		if(comida!=null){
+    			session.delete(comida);
+    		}
     		tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();
@@ -542,11 +551,14 @@ public class ConnectorHB {
 	}
 	
 	/*INGREDIENTE*/
-	public void deleteIngrediente(Ingrediente ingrediente) {
+	public void deleteIngrediente(int idIngrediente) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(ingrediente);
+    		Ingrediente ingrediente=(Ingrediente)session.get(Ingrediente.class, idIngrediente);
+    		if(ingrediente!=null){
+    			session.delete(ingrediente);
+    		}
     		tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();
@@ -556,11 +568,14 @@ public class ConnectorHB {
 	}
 	
 	/*FAMILIA INGREDIENTE*/
-	public void deleteFamiliaIng(FamiliaIng familiaing) {
+	public void deleteFamiliaIng(int idFamiliaIng) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(familiaing);
+    		FamiliaIng familia=(FamiliaIng)session.get(FamiliaIng.class, idFamiliaIng);
+    		if(familia!=null){
+    			session.delete(familia);
+    		}
     		tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();
@@ -570,11 +585,14 @@ public class ConnectorHB {
 	}
 
 	/*CHEF*/
-	public void deleteChef(Chef chef) {
+	public void deleteChef(int idChef) {
     	try{
     		session=sf.openSession();
     		tx=session.beginTransaction();
-    		session.delete(chef);
+    		Chef  chef=(Chef)session.get(Chef.class,idChef);
+    		if(chef!=null){
+    			session.delete(chef);
+    		}
     		tx.commit();
     	}catch(HibernateException e) {
     		e.printStackTrace();

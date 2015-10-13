@@ -308,8 +308,7 @@ public class Visor {
     	int tamany = recetas.size();
     	boolean id_rec=comprobarOpcion(String.valueOf(id_receta),tamany+1);
     	if(id_rec){
-        	Receta receta = recetas.get(id_receta-1);
-        	conector.deleteReceta(receta);
+        	conector.deleteReceta(id_receta);
     	}
     }
     
@@ -423,8 +422,7 @@ public class Visor {
     	int tamany = platos.size();
     	boolean id_plat=comprobarOpcion(String.valueOf(id_plato),tamany+1);
     	if(id_plat){
-        	Plato plato = platos.get(id_plato-1);
-        	conector.deletePlato(plato);
+        	conector.deletePlato(id_plato);
     	}
     }
     
@@ -539,8 +537,7 @@ public class Visor {
     	int tamany = comidas.size();
     	boolean id_comer=comprobarOpcion(String.valueOf(id_comida),tamany+1);
     	if(id_comer){
-        	Comida comida = comidas.get(id_comida-1);
-        	conector.deleteComida(comida);
+        	conector.deleteComida(id_comida);
     	}
     }
     
@@ -691,8 +688,7 @@ public class Visor {
 
     	boolean id_ingre=comprobarOpcion(String.valueOf(id_ing),tamany+1);
     	if(id_ingre){
-        	Ingrediente ingrediente = ingredientes.get(id_ing-1);
-        	conector.deleteIngrediente(ingrediente);
+        	conector.deleteIngrediente(id_ing);
     	}
     }
     
@@ -814,8 +810,7 @@ public class Visor {
 
     	boolean id_faming=comprobarOpcion(String.valueOf(id_famings),tamany+1);
     	if(id_faming){
-        	FamiliaIng familiaing = familiaings.get(id_famings-1);
-        	conector.deleteFamiliaIng(familiaing);
+        	conector.deleteFamiliaIng(id_famings);
     	}
     }
     
@@ -942,8 +937,7 @@ public class Visor {
 
     	boolean id_chef=comprobarOpcion(String.valueOf(id_chefs),tamany+1);
     	if(id_chef){
-        	Chef chef = chefs.get(id_chefs-1);
-        	conector.deleteChef(chef);
+        	conector.deleteChef(id_chefs);
     	}
     }
     
