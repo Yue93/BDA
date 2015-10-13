@@ -5,7 +5,7 @@
 <hibernate-mapping>
     <class name="Modelo.FamiliaIng" table="FAMILIAING">
         <id name="id" column="ID" type="int">
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         
         <property name="nombre" column="NOMBRE" type="java.lang.String"/>

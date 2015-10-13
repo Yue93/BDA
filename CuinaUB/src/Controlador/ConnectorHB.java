@@ -61,12 +61,28 @@ public class ConnectorHB {
     
     
     /*RECETA*/
-    public void saveReceta(Receta receta){
+    public void saveReceta(Receta receta,int idComida, int idChef, int idPlato, Set<Integer> idIngredientes){
     	try{	
-	    	session=sf.openSession();
-	    	tx=session.beginTransaction();
-    		session.save(receta);
-    		tx.commit();
+    		session=sf.openSession();
+    		tx=session.beginTransaction();
+    		Set<Ingrediente> ingredientes=new HashSet<Ingrediente>();
+    		Plato plato=(Plato)session.get(Plato.class,idPlato);
+	    	Chef chef=(Chef)session.get(Chef.class, idChef);
+	    	Comida comida=(Comida)session.get(Comida.class,idComida);
+	    	for(int idActual:idIngredientes){
+    			Ingrediente ingrediente=(Ingrediente)session.get(Ingrediente.class, idActual);
+    			if(ingrediente!=null){
+    				ingredientes.add(ingrediente);
+    			}
+    		}
+	    	if(plato!=null && chef!=null && comida!=null && ingredientes.size()>0){
+	    		receta.setComida(comida);
+		    	receta.setChef(chef);
+		    	receta.setPlato(plato);
+		    	receta.setIngredientes(ingredientes);
+	    		session.save(receta);	    		
+	    	}
+	    	tx.commit();
     	}catch(HibernateException e){
             if (tx!=null) tx.rollback();
     		e.printStackTrace();
@@ -196,7 +212,8 @@ public class ConnectorHB {
             System.out.println("        Lista de platos     ");
             System.out.println("--------------------------------");
             for(Plato plato:platos){
-                System.out.println("Id plato: "+plato.getId()+" ---- "+"Nombre: "+plato.getNombre());
+                System.out.println("Id: "+plato.getId()+"\nNombre: "+plato.getNombre());
+                System.out.println("Descripcion: "+plato.getDescripcion());
             }
     		tx.commit();
     	}catch(HibernateException e) {
@@ -243,7 +260,9 @@ public class ConnectorHB {
             System.out.println("        Lista de chefs      ");
             System.out.println("--------------------------------");
             for(Chef chef:chefs){
-                System.out.println("Nombre: "+chef.getNombre());
+                System.out.println("Id: "+chef.getId()+"\nNombre: "+chef.getNombre());
+                System.out.println("Apellido: "+chef.getApellido());
+                System.out.println("Numero Estrellas: "+chef.getnEstrellas());
             }
     		tx.commit();
     	}catch(HibernateException e) {
@@ -267,6 +286,7 @@ public class ConnectorHB {
             System.out.println("------------------------------------");
             for(Ingrediente ingrediente: ingredientes){
                 System.out.println("Id Ingrediente: "+ingrediente.getId()+" --- "+"Nombre: "+ingrediente.getNombre());
+                System.out.println("Refrigeracion: "+ingrediente.isRefrigeracion());
             }
     		tx.commit();
     	}catch(HibernateException e) {
@@ -289,7 +309,8 @@ public class ConnectorHB {
             System.out.println("        Lista de familias       ");
             System.out.println("--------------------------------");
             for(FamiliaIng familia: familias){
-                System.out.println("ID: "+familia.getId()+" Nombre: "+familia.getNombre());
+                System.out.println("ID: "+familia.getId()+"\nNombre: "+familia.getNombre());
+                System.out.println("Descripcion: "+familia.getDescripcion());
             }
     		tx.commit();
     	}catch(HibernateException e) {
@@ -330,6 +351,7 @@ public class ConnectorHB {
     	}
     }
     
+    
     public void updatePlato(int id,String nombre, String descripcion, Set<Integer> idRecetas){
     	try{
 	    	session=sf.openSession();
@@ -354,6 +376,7 @@ public class ConnectorHB {
     		session.close();
     	}
     }
+    
     
     public void updateChef(int id,String nombre, String apellido, int nEstrellas, Set<Integer> idRecetas){
     	try{
@@ -380,6 +403,7 @@ public class ConnectorHB {
     		session.close();
     	}
     }
+    
     
     public void updateIngrediente(int id,String nombre, boolean boolRefrigeracion, FamiliaIng familia, Set<Integer> idRecetas){
     	try{
@@ -409,6 +433,7 @@ public class ConnectorHB {
     	}
     }
     
+    
     public void updateFamiliaIng(int id,String nombre, String descripcion, Set<Integer> idIngredientes){
     	try{
 	    	session=sf.openSession();
@@ -433,6 +458,42 @@ public class ConnectorHB {
     		session.close();
     	}
     }
+    
+    
+    public void updateReceta(int id,int idPlato, int idChef, int idComida, String nombre, String elaboracion, int dificultad, int tiempo,
+    		Set<Integer> idIngredientes){
+    	try{
+	    	session=sf.openSession();
+	    	tx=session.beginTransaction();
+	    	Plato plato=(Plato)session.get(Plato.class,idPlato);
+	    	Chef chef=(Chef)session.get(Chef.class, idChef);
+	    	Comida comida=(Comida)session.get(Comida.class,idComida);
+	    	Receta receta=(Receta)session.get(Receta.class,id);
+	    	if(plato!=null && chef!=null && comida!=null && receta!=null){
+	    		Set<Ingrediente> ingredientes=new HashSet<Ingrediente>();
+	    		receta.setNombre(nombre);
+	    		receta.setElaboracion(elaboracion);
+	    		receta.setDificultad(dificultad);
+	    		receta.setTiempo(tiempo);
+	    		receta.setChef(chef);
+	    		receta.setComida(comida);
+	    		receta.setPlato(plato);
+	    		for(int idActual:idIngredientes){
+	    			Ingrediente ingrediente=(Ingrediente)session.get(Ingrediente.class, idActual);
+	    			if(ingrediente!=null){
+	    				ingredientes.add(ingrediente);
+	    			}
+	    		}
+	    		receta.setIngredientes(ingredientes);
+	    		tx.commit();
+	    	}
+    	}catch(HibernateException e){
+    		System.out.println("No se ha podido realizar la operacion!");
+    	}finally{
+    		session.close();
+    	}
+    }
+    
     
     /*++++++++++++++++DELETE ACTIONS+++++++++++++++++++*/
     
@@ -537,4 +598,53 @@ public class ConnectorHB {
         }
         return familia;
     }
+    
+    public Comida getComida(int idComida){
+        Comida comida=null;
+        try{
+            session=sf.openSession();
+            tx=session.beginTransaction();
+            comida=(Comida) session.get(Comida.class, idComida);
+            tx.commit();
+        }catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return comida;
+    }
+    
+    public Plato getPlato(int idPlato){
+        Plato plato=null;
+        try{
+            session=sf.openSession();
+            tx=session.beginTransaction();
+            plato=(Plato) session.get(Plato.class, idPlato);
+            tx.commit();
+        }catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return plato;
+    }
+    
+    public Chef getChef(int idChef){
+        Chef chef=null;
+        try{
+            session=sf.openSession();
+            tx=session.beginTransaction();
+            chef=(Chef) session.get(Chef.class, idChef);
+            tx.commit();
+        }catch(HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return chef;
+    }
+    
 }

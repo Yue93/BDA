@@ -193,55 +193,109 @@ public class Visor {
      * @return no retornamos nada*/
     private static void afegirReceta(){
     	try{
-            System.out.println("Nombre de la receta: ");
-            sc.nextLine();
-            String nombre=sc.nextLine();
-            System.out.println("Tiempo de eleboracion(en minutos): ");
-            int tiempo=sc.nextInt();
-            System.out.println("Descripcion de la elaboracion: ");
-            sc.nextLine();
-            String elaboracion=sc.nextLine();
-            System.out.println("Dificultat de la elaboracion(1 a 10): ");
-            int dificultat=sc.nextInt();
+    		Set<Integer> idIngredientes=new HashSet<Integer>();
+    		boolean actualizar=true;
+            List<Comida> comidas=conector.listComida();
+	    	if(comidas!=null && comidas.size()>0){
+	    		System.out.println("Entra el id de la comida: ");
+	    		int idComida=sc.nextInt();
+	    		List<Chef> chefs=conector.listChef();
+	    		if(chefs!=null && chefs.size()>0){
+	    			System.out.println("Entra el id del chef: ");
+		    		int idChef=sc.nextInt();
+	    			List<Plato> platos=conector.listPlato();
+	    			if(platos!=null && platos.size()>0){
+	    				System.out.println("Entra el id del plato: ");
+	    	    		int idPlato=sc.nextInt();
+	    				List<Ingrediente> ingredientes=conector.listIngredientes();
+	    				if(ingredientes!=null && ingredientes.size()>0){
+    				    	while(actualizar){
+    				    		System.out.println("Escoge los ingredientes(-1 para terminar)");
+    				    		int idIngrediente=sc.nextInt();
+    				    		if(idIngrediente!=-1){
+    				    			idIngredientes.add(idIngrediente);
+    				    		}else{
+    				    			actualizar=false;
+    				    		}
+    				    	}
+	    			    	System.out.println("Nombre de la receta: ");
+	    		            sc.nextLine();
+	    		            String nombre=sc.nextLine();
+	    		            System.out.println("Tiempo de eleboracion(en minutos): ");
+	    		            int tiempo=sc.nextInt();
+	    		            System.out.println("Descripcion de la elaboracion: ");
+	    		            sc.nextLine();
+	    		            String elaboracion=sc.nextLine();
+	    		            System.out.println("Dificultat de la elaboracion(1 a 10): ");
+	    		            int dificultat=sc.nextInt();
+	    		            Receta receta=new Receta(nombre,elaboracion,dificultat,tiempo);
+	    		            conector.saveReceta(receta,idComida,idChef,idPlato,idIngredientes);
+	    				}
+	    			}
+	    		}
+	    	}
             
-            Receta receta=new Receta(nombre,elaboracion,dificultat,tiempo);
-            conector.saveReceta(receta);
         }catch(NumberFormatException e ){
             System.out.println("Formato incorrecto!");
         }catch(InputMismatchException ime){
             System.out.println("Dato introducido incorrecto!");
         }
     }
-	
+
+    
     private static void updateReceta(){
     	try{
-	    	Set<Integer> idRecetas=new HashSet<Integer>();
+	    	Set<Integer> idIngredientes=new HashSet<Integer>();
 	    	boolean actualizar=true;
-	    	conector.listPlato();
-	    	System.out.println("Entra el plato que quieres actualizar(ID):");
-	    	int id=sc.nextInt();
-	    	System.out.println("Nombre del plato: ");
-	    	String nombre=sc.next();
-	    	System.out.println("Descripcion: ");
-	    	sc.nextLine();
-	    	String descripcion=sc.nextLine();
-	    	if(conector.listReceta()!=null){
-		    	while(actualizar){
-		    		System.out.println("Escoge la receta(-1 para terminar)");
-		    		int idReceta=sc.nextInt();
-		    		if(idReceta!=-1){
-		    			idRecetas.add(idReceta);
-		    		}else{
-		    			actualizar=false;
-		    		}
-		    	}
-	    	}
-	    	conector.updatePlato(id,nombre,descripcion,idRecetas);
+	    	List<Comida> comidas=conector.listComida();
+	    	if(comidas!=null && comidas.size()>0){
+	    		System.out.println("Entra el id de la comida: ");
+	    		int idComida=sc.nextInt();
+	    		List<Chef> chefs=conector.listChef();
+	    		if(chefs!=null && chefs.size()>0){
+	    			System.out.println("Entra el id del chef: ");
+		    		int idChef=sc.nextInt();
+	    			List<Plato> platos=conector.listPlato();
+	    			if(platos!=null && platos.size()>0){
+	    				System.out.println("Entra el id del plato: ");
+	    	    		int idPlato=sc.nextInt();
+	    				List<Ingrediente> ingredientes=conector.listIngredientes();
+	    				if(ingredientes!=null && ingredientes.size()>0){
+    				    	while(actualizar){
+    				    		System.out.println("Escoge los ingredientes(-1 para terminar)");
+    				    		int idIngrediente=sc.nextInt();
+    				    		if(idIngrediente!=-1){
+    				    			idIngredientes.add(idIngrediente);
+    				    		}else{
+    				    			actualizar=false;
+    				    		}
+    				    	}
+    				    	List<Receta> recetas=conector.listReceta();
+    				    	if(recetas!=null && recetas.size()>0){
+		    			    	System.out.println("Entra la receta que quieres actualizar(ID):");
+		    			    	int id=sc.nextInt();
+		    			    	System.out.println("Nombre de la receta: ");
+		    			    	sc.nextLine();
+		    			    	String nombre=sc.nextLine();
+		    			    	System.out.println("Tiempo de elaboracion?");
+		    			    	int tiempo=sc.nextInt();
+		    			    	System.out.println("Descripcion de la elaboracion: ");
+		    			    	sc.nextLine();
+		    			    	String elaboracion=sc.nextLine();
+		    			    	System.out.println("Dificultat de la elaboracion(1 a 10): ");
+		    			    	int dificultad=sc.nextInt();
+		    			    	conector.updateReceta(id,idPlato,idChef,idComida,nombre,elaboracion,dificultad,tiempo,idIngredientes);
+    				    	}
+	    				}
+	    			}
+	    		}    		
+	    	}	    	
     	}catch(InputMismatchException ime){
     		System.out.println("Entrada incorrecta!");
     	}
     	
     }
+    
     
     /**
      * Método para eliminar una receta
@@ -316,14 +370,15 @@ public class Visor {
      * @return no retornamos nada*/
     private static void afegirPlato(){
     	System.out.println("Nombre del plato: ");
-    	String nombre=sc.next();
+    	sc.nextLine();
+    	String nombre=sc.nextLine();
     	System.out.println("Descripcion del plato: ");
     	String descripcion=sc.nextLine();
-    	sc.nextLine();
     	
     	Plato plato=new Plato(nombre,descripcion);
     	conector.savePlato(plato);
     }
+    
     
     private static void updatePlato(){
     	try{
@@ -333,9 +388,9 @@ public class Visor {
 	    	System.out.println("Entra el plato que quieres actualizar(ID):");
 	    	int id=sc.nextInt();
 	    	System.out.println("Nombre del plato: ");
-	    	String nombre=sc.next();
-	    	System.out.println("Descripcion: ");
 	    	sc.nextLine();
+	    	String nombre=sc.nextLine();
+	    	System.out.println("Descripcion: ");
 	    	String descripcion=sc.nextLine();
 	    	if(conector.listReceta()!=null){
 		    	while(actualizar){
@@ -354,6 +409,8 @@ public class Visor {
     	}
     	
     }
+    
+    
     
     /**
      * Método para eliminar un plato
@@ -375,6 +432,7 @@ public class Visor {
     
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //--------------------------Comida-----------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
@@ -428,15 +486,15 @@ public class Visor {
      * @return no retornamos nada*/
     private static void afegirComida(){
     	System.out.println("Nombre de la comida: ");
-    	String nombre=sc.next();
-    	System.out.println("Descripcion: ");
     	sc.nextLine();
+    	String nombre=sc.nextLine();
+    	System.out.println("Descripcion: ");
     	String descripcion=sc.nextLine();
-    	
     	
     	Comida comida=new Comida(nombre,descripcion);
     	conector.saveComida(comida);
     } 
+    
     
     private static void updateComida(){
     	try{
@@ -446,11 +504,10 @@ public class Visor {
 	    	System.out.println("Entra la comida que quieres actualizar(ID):");
 	    	int id=sc.nextInt();
 	    	System.out.println("Nombre de la comida: ");
-	    	String nombre=sc.next();
-	    	System.out.println("Descripcion: ");
 	    	sc.nextLine();
+	    	String nombre=sc.nextLine();
+	    	System.out.println("Descripcion: ");
 	    	String descripcion=sc.nextLine();
-	    	//List<Receta> recetas=conector.listReceta();
 	    	if(conector.listReceta()!=null){
 		    	while(actualizar){
 		    		System.out.println("Escoge la receta(-1 para terminar)");
@@ -468,6 +525,8 @@ public class Visor {
     	}
     	
     }
+    
+    
     
     /**
      * Método para eliminar una comida
@@ -539,6 +598,8 @@ public class Visor {
         }
     }
     
+    
+    
     /**
      * Método para añadir un ingrediente
      * @param no le pasamos parametros
@@ -555,16 +616,22 @@ public class Visor {
             if(refrigeracion.toLowerCase().equals("y")){
                 boolRefrigeracion=true;
             }
-            conector.listFamiliaIng();
-            System.out.println("Id de la familia a la que pertenece?");
-            int idFamilia=sc.nextInt();
-            familia=conector.getFamiliaIng(idFamilia);
-            Ingrediente ingrediente=new Ingrediente(nombre,familia,boolRefrigeracion);
-            conector.saveIngrediente(ingrediente);
+            List<FamiliaIng> familias=conector.listFamiliaIng();
+            if(familias!=null && familias.size()>0){
+	            System.out.println("Id de la familia a la que pertenece?");
+	            int idFamilia=sc.nextInt();
+	            familia=conector.getFamiliaIng(idFamilia);
+	            if(familia!=null){
+		            Ingrediente ingrediente=new Ingrediente(nombre,familia,boolRefrigeracion);
+		            conector.saveIngrediente(ingrediente);
+	            }
+            }
         }catch(InputMismatchException ime){
             System.out.println("Tipo de datos incorrecto!");
         }
     }
+    
+    
     
     private static void updateIngrediente(){
     	try{
@@ -572,7 +639,8 @@ public class Visor {
 	    	boolean actualizar=true;
 	    	boolean boolRefrigeracion=false;
 	    	FamiliaIng familia=null;
-	    	if(conector.listFamiliaIng()!=null && conector.listFamiliaIng().size()>0){
+	    	List<Ingrediente> ingredientes=conector.listIngredientes();
+	    	if(ingredientes!=null && ingredientes.size()>0){
 	    		System.out.println("Seleccion el ingrediente que quieres actualizar(ID):");
 		    	int id=sc.nextInt();
 		    	System.out.println("Nombre del ingrediente:");
@@ -587,7 +655,7 @@ public class Visor {
 	            int idFamilia=sc.nextInt();
 	            familia=conector.getFamiliaIng(idFamilia);
 	            
-		    	if(conector.listIngredientes()!=null){
+		    	if(conector.listReceta()!=null){
 			    	while(actualizar){
 			    		System.out.println("Escoge la receta(-1 para terminar)");
 			    		int idReceta=sc.nextInt();
@@ -607,6 +675,8 @@ public class Visor {
     		System.out.println("Entrada incorrecta!");
     	}
     }
+    
+    
     
     /**
      * Método para eliminar un ingrediente
@@ -630,6 +700,10 @@ public class Visor {
     
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //------------------Familia Ingrediente------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
@@ -676,20 +750,24 @@ public class Visor {
         }
     }
     
+    
+    
     /**
      * Método para añadir una familia de ingredientes
      * @param no le pasamos parametros
      * @return no retornamos nada*/
     private static void afegirFamiliaIng(){
     	System.out.println("Tipo de familia: ");
-    	String nombre=sc.next();
+    	sc.nextLine();
+    	String nombre=sc.nextLine();
     	System.out.println("Descripcion: ");
     	String descripcion=sc.nextLine();
-    	sc.nextLine();
-    	
+
     	FamiliaIng familiaing=new FamiliaIng(nombre,descripcion);
     	conector.saveFamiliaIng(familiaing);
     }
+    
+    
     
     private static void updateFamiliaIng(){
     	try{
@@ -699,11 +777,12 @@ public class Visor {
 	    	System.out.println("Seleccion la familia de ingrediente que quieres actualizar(ID):");
 	    	int id=sc.nextInt();
 	    	System.out.println("Nombre de la familia: ");
-	    	String nombre=sc.next();
-	    	System.out.println("Descripcion de la familia: ");
 	    	sc.nextLine();
+	    	String nombre=sc.nextLine();
+	    	System.out.println("Descripcion de la familia: ");
 	    	String descripcion=sc.nextLine();
-	    	if(conector.listIngredientes()!=null){
+	    	List<Ingrediente> ingredientes=conector.listIngredientes();
+	    	if(ingredientes!=null && ingredientes.size()>0){
 		    	while(actualizar){
 		    		System.out.println("Escoge la receta(-1 para terminar)");
 		    		int idIngrediente=sc.nextInt();
@@ -719,6 +798,8 @@ public class Visor {
     		System.out.println("Entrada incorrecta!");
     	}
     }
+    
+    
     
     /**
      * Método para eliminar una familia de ingredientes
@@ -742,6 +823,9 @@ public class Visor {
     
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //--------------------------Chef-------------------------
+    //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
     //+++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
@@ -788,6 +872,8 @@ public class Visor {
         }
     }
     
+    
+    
     /**
      * Método para añadir a un chef
      * @param no le pasamos parametros
@@ -806,6 +892,8 @@ public class Visor {
             System.out.println("Dato introducido incorrecto!");
         }
     }
+    
+    
 
     private static void updateChef(){
     	try{
@@ -820,7 +908,8 @@ public class Visor {
 	    	String apellido=sc.next();
 	    	System.out.println("Numero de estrellas Michelin: ");
 	    	int nEstrellas=sc.nextInt();
-	    	if(conector.listReceta()!=null){
+	    	List<Receta> recetas=conector.listReceta();
+	    	if(recetas!=null && recetas.size()>0){
 		    	while(actualizar){
 		    		System.out.println("Escoge la receta(-1 para terminar)");
 		    		int idReceta=sc.nextInt();
@@ -837,6 +926,8 @@ public class Visor {
     	}
     	
     }
+    
+    
     
     /**
      * Método para eliminar a un chef
@@ -855,6 +946,8 @@ public class Visor {
         	conector.deleteChef(chef);
     	}
     }
+    
+    
     
     
     
@@ -883,6 +976,8 @@ public class Visor {
         }
         return Integer.valueOf(opcion);
     }
+    
+    
 	
 	
 	/**
@@ -899,6 +994,8 @@ public class Visor {
         System.out.println("================================");
         System.out.println("Escoge una opcion:");
     }
+    
+    
     
     
     /**
@@ -925,4 +1022,6 @@ public class Visor {
         }       
         return opcionCorrecto;
     }
+    
+    
 }
