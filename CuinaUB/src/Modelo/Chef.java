@@ -2,6 +2,11 @@ package Modelo;
 
 import java.util.Set;
 
+/**
+ * Clase Chef
+ * @author SIR
+ *
+ */
 public class Chef {
 	private int id;
 	private String nombre;
@@ -10,10 +15,20 @@ public class Chef {
 	
 	private Set<Receta> recetas;
 	
+	/**
+	 * Constructor vacio de la clase
+	 */
 	public Chef(){
 		
 	}
 	
+	/**
+	 * Constructor de la clase
+	 * @param id
+	 * @param nombre
+	 * @param apellido
+	 * @param nEstrellas
+	 */
 	public Chef(int id,String nombre,String apellido,int nEstrellas){
 		this.id=id;
 		this.nombre=nombre;
@@ -21,6 +36,12 @@ public class Chef {
 		this.nEstrellas=nEstrellas;
 	}
 	
+	/**
+	 * Constructor de la clase
+	 * @param nombre
+	 * @param apellido
+	 * @param nEstrellas
+	 */
 	public Chef(String nombre,String apellido,int nEstrellas){
 		this.nombre=nombre;
 		this.apellido=apellido;

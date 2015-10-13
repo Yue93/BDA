@@ -3,6 +3,11 @@ package Modelo;
 import java.sql.Time;
 import java.util.Set;
 
+/**
+ * Clase Receta
+ * @author SIR
+ *
+ */
 public class Receta {
 	private int id;
 	private String nombre;
@@ -15,10 +20,21 @@ public class Receta {
 	private Chef chef;
 	private Set<Ingrediente> ingredientes;
 	
+	/**
+	 * Constructor de la clase
+	 */
 	public Receta(){
 		
 	}
 	
+	/**
+	 * Constructor de la clase receta
+	 * @param id id de la receta
+	 * @param nombre nombre de la receta
+	 * @param elaboracion descripcion de la elaboracion
+	 * @param dificultad nivel de dificultad de la elaboracion
+	 * @param tiempo tiempo requerido para la elaboracion
+	 */
 	public Receta(int id,String nombre, String elaboracion,int dificultad, int tiempo){
 		this.id=id;
 		this.nombre=nombre;
@@ -27,6 +43,13 @@ public class Receta {
 		this.tiempo=tiempo;
 	}
 	
+	/**
+	 * Constructor de la clase receta
+	 * @param nombre nombre de la receta
+	 * @param elaboracion descripcion de la elaboracion
+	 * @param dificultad nivel de dificultad de la elaboracion
+	 * @param tiempo tiempo requerido para la elaboracion
+	 */
 	public Receta(String nombre, String elaboracion,int dificultad, int tiempo){
 		this.nombre=nombre;
 		this.elaboracion=elaboracion;

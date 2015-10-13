@@ -2,6 +2,11 @@ package Modelo;
 
 import java.util.Set;
 
+/**
+ * Clase Ingrediente
+ * @author SIR
+ *
+ */
 public class Ingrediente {
 	private int id;
 	private String nombre;
@@ -14,6 +19,13 @@ public class Ingrediente {
 		
 	}
 	
+	/**
+	 * Constructor de la clase ingrediente
+	 * @param id
+	 * @param nombre
+	 * @param familia
+	 * @param refrigeracion
+	 */
 	public Ingrediente(int id,String nombre,FamiliaIng familia,boolean refrigeracion){
 		this.id=id;
 		this.nombre=nombre;
@@ -21,6 +33,12 @@ public class Ingrediente {
 		this.refrigeracion=refrigeracion;
 	}
 	
+	/**
+	 * Constructor de la clase ingrediente
+	 * @param nombre
+	 * @param familia
+	 * @param refrigeracion
+	 */
 	public Ingrediente(String nombre,FamiliaIng familia,boolean refrigeracion){
 		this.nombre=nombre;
 		this.familia=familia;

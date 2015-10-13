@@ -2,6 +2,11 @@ package Modelo;
 
 import java.util.Set;
 
+/**
+ * Clase Plato
+ * @author SIR
+ *
+ */
 public class Plato {
 	private int id;
 	private String nombre;
@@ -9,17 +14,30 @@ public class Plato {
 	
 	private Set<Receta> recetas;
 	
+	/**
+	 * Constructor de la clase
+	 */
 	public Plato(){
 		
 	}
 	
+	/**
+	 * Constructor de la clase plato
+	 * @param id
+	 * @param nombre
+	 * @param descripcion
+	 */
 	public Plato(int id, String nombre, String descripcion){
 		this.id=id;
 		this.nombre=nombre;
 		this.descripcion=descripcion;
 	}
 	
-	
+	/**
+	 * Constructor de la clases
+	 * @param nombre
+	 * @param descripcion
+	 */
 	public Plato(String nombre, String descripcion){
 		this.nombre=nombre;
 		this.descripcion=descripcion;

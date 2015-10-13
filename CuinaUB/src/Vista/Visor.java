@@ -20,9 +20,13 @@ import Modelo.FamiliaIng;
 import Modelo.Ingrediente;
 import Modelo.Plato;
 import Modelo.Receta;
-//import Modelo.Usuario;
-import Modelo.Usuario;
 
+
+/**
+ * Clase Visor(Vista de la aplicacion)
+ * @author SIR
+ *
+ */
 public class Visor {
 	
 	private static int nerrors;
@@ -35,6 +39,8 @@ public class Visor {
 	
 	static private String contrasenya="";
 	
+	
+	//Enum menu
 	static private enum MenuReceta{Añadir_Nueva_Receta,Consultar_Receta,Actualizar_Receta,Eliminar_Receta,Salir};
 	static private enum MenuComida{Añadir_Nueva_Comida,Consultar_Comida,Actualizar_Comida,Eliminar_Comida,Salir};
 	static private enum MenuPlato{Añadir_Nuevo_Plato,Consultar_Plato,Actualizar_Plato,Eliminar_Plato,Salir};
@@ -43,6 +49,8 @@ public class Visor {
 	static private enum MenuChef{ Añadir_Nuevo_Chef,Consultar_Chef,Actualizar_Chef,Eliminar_Chef,Salir};
 	static private enum MenuElemento{Receta,Tipo_Plato,Tipo_Comida,Chef,Ingrediente,Familia_Ingrediente,Salir};
 	
+	
+	//Menu options
 	private static String[] opcionsMenuReceta={ "Añadir_Nueva_Receta","Consultar_Receta","Actualizar_Receta","Eliminar_Receta","Salir"};
 	private static String[] opcionsMenuComida={ "Añadir_Nueva_Comida","Consultar_Comida","Actualizar_Comida","Eliminar_Comida","Salir"};
 	private static String[] opcionsMenuPlato={ "Añadir_Nuevo_Plato","Consultar_Plato","Actualizar_Plato","Eliminar_Plato","Salir"};
@@ -51,10 +59,13 @@ public class Visor {
 	private static String[] opcionsMenuChef={ "Añadir_Nuevo_Chef","Consultar_Chef","Actualizar_Chef","Eliminar_Chef","Salir"};
 	private static String[] opcionsMenuElemento={"Receta","Tipo_Plato","Tipo_Comida","Chef","Ingrediente","Familia_Ingrediente","Salir"};
 	
+	//Controller
 	private static ConnectorHB conector;
-	
-	private static Usuario user;
-	
+		
+	/**
+	 * Main method
+	 * @param args
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args){
 		nerrors=0;
@@ -66,7 +77,6 @@ public class Visor {
 			System.out.println("===========================================");
 			System.out.println("                 Welcome                   ");
 			System.out.println("===========================================");
-			//user=new Usuario(usuario,contrasenya);
 			conector=new ConnectorHB();
 			conector.conectar();
 			gestionMenuPrincipal();
@@ -75,7 +85,12 @@ public class Visor {
         }
 	}
 	
-	
+	/**
+	 * Metodo para comprobar si el nombre de usuario y contraseña entrado es correcto
+	 * @param enterUsername nombre de usuario entrado
+	 * @param enterPassaword password entrado por usuario
+	 * @return booleano que nos indica si la cuenta es correcto
+	 */
 	private static boolean checkUser(String enterUsername,String enterPassaword){
 		boolean correct=false;
 		if(username.equals(enterUsername) && password.equals(enterPassaword)){
@@ -242,7 +257,10 @@ public class Visor {
         }
     }
 
-    
+    /**
+     * Metodo para actualizar una receta.Para poder llevar a cabo la operacion debe existir
+     * en la base de datos de la aplicacion algunos datos de la comida,chef y platos
+     */
     private static void updateReceta(){
     	try{
 	    	Set<Integer> idIngredientes=new HashSet<Integer>();
@@ -378,7 +396,9 @@ public class Visor {
     	conector.savePlato(plato);
     }
     
-    
+    /**
+     * Metodo para actulizar los datos de un plato.Se pedira al usuario que entra todas las informaciones de golpe
+     */
     private static void updatePlato(){
     	try{
 	    	Set<Integer> idRecetas=new HashSet<Integer>();
@@ -493,7 +513,10 @@ public class Visor {
     	conector.saveComida(comida);
     } 
     
-    
+    /**
+     * Metodo para actualizar las infomarciones de una comida.Se escoge la comida introuduciendo su id
+     * Si es correcto a posteriori se le pedira al usuario los nuevos datos de la comida
+     */
     private static void updateComida(){
     	try{
 	    	Set<Integer> idRecetas=new HashSet<Integer>();
@@ -629,7 +652,11 @@ public class Visor {
     }
     
     
-    
+    /**
+     * Metodo para actualizar las informaciones de un ingrediente.Se le pedira al usuario el id 
+     * del ingrediente que quiere modificar la informacion y a posteriori los nuevos datos del
+     * ingrediente
+     */
     private static void updateIngrediente(){
     	try{
 	    	Set<Integer> idRecetas=new HashSet<Integer>();
@@ -764,7 +791,10 @@ public class Visor {
     }
     
     
-    
+    /**
+     * Metodo para actualizar los datos de una Familia de ingredientes.Se le pedira al usuario id de la familiar 
+     * que quiere modificar los datos y a posteriori los nuevos datos.
+     */
     private static void updateFamiliaIng(){
     	try{
 	    	Set<Integer> idIngredientes=new HashSet<Integer>();
@@ -890,6 +920,10 @@ public class Visor {
     
     
 
+    /**
+     * Metodo para actualizar los datos de un chef.Se le pedira al usuario que entra el id del chef que 
+     * quiere modificar los datos y a posteriori los nuevos datos del chef.
+     */
     private static void updateChef(){
     	try{
 	    	Set<Integer> idRecetas=new HashSet<Integer>();
@@ -996,7 +1030,7 @@ public class Visor {
      * Metodo donde comprobamos si el usuario ha escogido una opcion correcta
      * @param opcion Es la opcion que ha entrado el usuario.Es un string
      * @param nopcionsMenu numero de opciones existentes en el menu.
-     * @return 
+     * @return booleano que nos indica si la opcion escogida existe
      */
     private static boolean comprobarOpcion(String opcion,int nopcionsMenu){
         boolean opcionCorrecto;

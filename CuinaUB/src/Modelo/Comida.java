@@ -2,6 +2,11 @@ package Modelo;
 
 import java.util.Set;
 
+/**
+ * Clase Comida
+ * @author SIR
+ *
+ */
 public class Comida {
 	private int id;
 	private String nombre;
@@ -9,16 +14,29 @@ public class Comida {
 	
 	private Set<Receta> recetas;
 	
+	/**
+	 * Constructor vacio de la clase
+	 */
 	public Comida(){
 		
 	}
 	
+	/**
+	 * Constructor de la clase
+	 * @param nombre
+	 * @param descripcion
+	 */
 	public Comida(String nombre, String descripcion){
 		this.nombre=nombre;
 		this.descripcion=descripcion;
 	}
 
-	
+	/**
+	 * Constructor de la clase
+	 * @param id
+	 * @param nombre
+	 * @param descripcion
+	 */
 	public Comida(int id, String nombre, String descripcion){
 		this.id=id;
 		this.nombre=nombre;
